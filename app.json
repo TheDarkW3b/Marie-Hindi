@@ -9,7 +9,7 @@
     "manager",
     "3"
   ],
-  "repository": "https://github.com/TheDarkW3b/NoUse",
+  "repository": "https://github.com/TheDarkW3b/Marie-Hindi",
   "env": {
     "ENV": {
       "description": "Setting this to ANYTHING will enable env variables",
@@ -37,7 +37,7 @@
     },
     "MESSAGE_DUMP": {
       "description": "optional: a chat where your replied saved messages are stored, to stop people deleting their old",
-      "value": "-1007777777777"
+      "value": "--1001173869371"
     },
     "SUDO_USERS": {
       "description": "A space separated list of user_ids which should be considered sudo users",
@@ -73,7 +73,7 @@
     },
     "BAN_STICKER": {
       "description": "Which sticker to use when banning people. Use https://telegram.dog/ShowJsonBot to get the file_id",
-      "value": "CAADBQADNwEAAjZzSxRZAc49mnFSSAI"
+      "value": "CAADBQADKwADttzjKMDa_NPYQVImFgQ"
     }
   },
   "addons": [
