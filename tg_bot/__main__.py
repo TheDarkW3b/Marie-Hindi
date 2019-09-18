@@ -20,7 +20,7 @@ from tg_bot.modules.helper_funcs.misc import paginate_modules
 PM_START_TEXT = """
 नमस्ते {}, मेरा नाम {} है! मैं यहां आपके ग्रूप को मैनज करने में आपकी सहायता करने के लिए हूं!.किसी भी मदद की ज़रूरत है हमारे सहायता ग्रूप में शामिल हों (@MenheraChanSupport) 
 
-मैं ग्रुप मैनेजर बॉट हूं,मेरे भगवान [ये](tg://user?id={}) है,मुझे python3 में बनाया गया है,python-telegram-bot library का उपयोग करके
+मैं ग्रुप मैनेजर बॉट हूं,मेरे [भगवान](tg://user?id={}) ये है,मुझे python3 में बनाया गया है,python-telegram-bot library का उपयोग करके
 
 /help से कमांड का पता लगाये
 
