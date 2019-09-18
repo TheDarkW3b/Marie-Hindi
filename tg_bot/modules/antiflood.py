@@ -120,10 +120,10 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /flood: To know your current message control..
+ - /flood: अपने वर्तमान संदेश नियंत्रण को जानने के लिए..
 
 *Admin only:*
- - /setflood <int/'no'/'off'>: enables or disables flood control
+ - /setflood <int/'no'/'off'>: स्पैम नियंत्रण को ऑन और ऑफ
 """
 
 __mod_name__ = "AntiFlood"
