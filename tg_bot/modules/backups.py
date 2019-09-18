@@ -22,8 +22,7 @@ def import_data(bot: Bot, update):
         try:
             file_info = bot.get_file(msg.reply_to_message.document.file_id)
         except BadRequest:
-            msg.reply_text("Try downloading and reuploading the file as yourself before importing - this one seems "
-                           "to be iffy!")
+            msg.reply_text("आयात करने से पहले फ़ाइल को स्वयं डाउनलोड करने और फिर लोड करने का प्रयास करें")
             return
 
         with BytesIO() as file:
@@ -33,8 +32,7 @@ def import_data(bot: Bot, update):
 
         # only import one group
         if len(data) > 1 and str(chat.id) not in data:
-            msg.reply_text("Theres more than one group here in this file, and none have the same chat id as this group "
-                           "- how do I choose what to import?")
+            msg.reply_text("इस फ़ाइल में यहाँ एक से अधिक ग्रुप हैं, और किसी के पास इस ग्रुप के समान चैट आईडी नहीं है")
             return
 
         # Select data source
@@ -48,7 +46,7 @@ def import_data(bot: Bot, update):
                 mod.__import_data__(str(chat.id), data)
         except Exception:
             msg.reply_text("An exception occured while restoring your data. The process may not be complete. If "
-                           "you're having issues with this, message @MarieSupport with your backup file so the "
+                           "you're having issues with this, message @MenheraChanSupport with your backup file so the "
                            "issue can be debugged. My owners would be happy to help, and every bug "
                            "reported makes me better! Thanks! :)")
             LOGGER.exception("Import for chatid %s with name %s failed.", str(chat.id), str(chat.title))
@@ -56,7 +54,7 @@ def import_data(bot: Bot, update):
 
         # TODO: some of that link logic
         # NOTE: consider default permissions stuff?
-        msg.reply_text("Backup fully imported. Welcome back! :D")
+        msg.reply_text("बैकअप पूरी तरह से सफलतापूर्वक वापस स्वागत है! :D")
 
 
 @run_async
@@ -70,9 +68,8 @@ __mod_name__ = "Backups"
 
 __help__ = """
 *Admin only:*
- - /import: reply to a group butler backup file to import as much as possible, making the transfer super simple! Note \
-that files/photos can't be imported due to telegram restrictions.
- - /export: !!! This isn't a command yet, but should be coming soon!
+ - /import: एक समूह बटलर बैकअप फ़ाइल का जवाब जितना संभव हो उतना आयात करने के लिए, जिससे ट्रांसफर सुपर सरल हो जाता है! ध्यान दें \ टेलीग्राम प्रतिबंध के कारण फ़ाइलें / फ़ोटो आयात नहीं किए जा सकते।.
+ - /export: !! यह अभी तक एक आदेश नहीं है, लेकिन जल्द ही आ जाना चाहिए
 """
 IMPORT_HANDLER = CommandHandler("import", import_data)
 EXPORT_HANDLER = CommandHandler("export", export_data)
