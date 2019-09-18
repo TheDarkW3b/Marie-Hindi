@@ -83,7 +83,7 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     if not user_member.status == 'administrator':
-        message.reply_text("वह एडमिन नहीं है!)
+        message.reply_text("वह एडमिन नहीं है!")
         return ""
 
     if user_id == bot.id:
