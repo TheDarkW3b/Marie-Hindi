@@ -28,16 +28,16 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("mension one.... 🤷🏻‍♂.")
+        message.reply_text("किसी को टैग करें... 🤷🏻‍♂.")
         return ""
 
     user_member = chat.get_member(user_id)
     if user_member.status == 'administrator' or user_member.status == 'creator':
-        message.reply_text("How am I meant to promote someone that's already an admin?")
+        message.reply_text("मैं कैसे किसी को प्रमोट देने के लिए है जो पहले से ही एक एडमिन है")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I can't promote myself! Get an admin to do it for me.")
+        message.reply_text("मैं खुद को प्रमोट नहीं दे सकता! मेरे लिए एक एडमिन लाओ")
         return ""
 
     # set same perms as bot - bot can't assign higher perms than itself!
@@ -53,7 +53,7 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
                           can_pin_messages=bot_member.can_pin_messages,
                           can_promote_members=bot_member.can_promote_members)
 
-    message.reply_text("promoted🧡")
+    message.reply_text("प्रमोटेडट🧡")
     return "<b>{}:</b>" \
            "\n#PROMOTED" \
            "\n<b>Admin:</b> {}" \
@@ -74,20 +74,20 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("mension one.... 🤷🏻‍♂.")
+        message.reply_text("किसी को टैग करें.. 🤷🏻‍♂.")
         return ""
 
     user_member = chat.get_member(user_id)
     if user_member.status == 'creator':
-        message.reply_text("i cant ban creator of the group.... 😬")
+        message.reply_text("मैं समूह के निर्माता को हटा नहीं सकता.... 😬")
         return ""
 
     if not user_member.status == 'administrator':
-        message.reply_text("Can't demote what wasn't promoted!")
+        message.reply_text("वह एडमिन नहीं है!)
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I can't demote myself! Get an admin to do it for me.")
+        message.reply_text("मैं खुद को प्रमोट नहीं दे सकता! मेरे लिए एक एडमिन लाओ")
         return ""
 
     try:
@@ -100,7 +100,7 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                               can_restrict_members=False,
                               can_pin_messages=False,
                               can_promote_members=False)
-        message.reply_text("Successfully demoted!")
+        message.reply_text("अब वह एडमिन नहीं है!")
         return "<b>{}:</b>" \
                "\n#DEMOTED" \
                "\n<b>Admin:</b> {}" \
@@ -109,8 +109,8 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                                           mention_html(user_member.user.id, user_member.user.first_name))
 
     except BadRequest:
-        message.reply_text("Could not demote. I might not be admin, or the admin status was appointed by another "
-                           "user, so I can't act upon them!")
+        message.reply_text("डिमोनेट नहीं कर सका। मैं एडमिन नहीं, या एडमिन द्वारा नियुक्त की गई थी "
+                           "इसलिए मैं उन पर कार्रवाई नहीं कर सकता!")
         return ""
 
 
@@ -182,10 +182,9 @@ def invite(bot: Bot, update: Update):
             invitelink = bot.exportChatInviteLink(chat.id)
             update.effective_message.reply_text(invitelink)
         else:
-            update.effective_message.reply_text("I don't have access to the invite link, try changing my permissions!")
+            update.effective_message.reply_text("मेरे पास आमंत्रण लिंक तक पहुंच नहीं है, अपनी अनुमतियां बदलने का प्रयास करें!")
     else:
-        update.effective_message.reply_text("I can only give you invite links for supergroups and channels, sorry!")
-
+        update.effective_message.reply_text("मैं केवल आपको सुपरग्रुप और चैनल के लिए लिंक दे सकता हूं!")
 
 @run_async
 def adminlist(bot: Bot, update: Update):
@@ -197,16 +196,16 @@ def adminlist(bot: Bot, update: Update):
         name = "[{}](tg://user?id={})".format(user.first_name + " " + (user.last_name or ""), user.id)
         if user.username:
             name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
-        if status == "creator":
-            text += "\n 🔱 Creator:"
-            text += "\n` • `{} \n\n 🔰 Admin:".format(name)
+        if status == "निर्माता":
+            text += "\n 🔱 निर्माता:"
+            text += "\n` • `{} \n\n 🔰 एडमिन:".format(name)
     for admin in administrators:
         user = admin.user
         status = admin.status
         name = "[{}](tg://user?id={})".format(user.first_name + " " + (user.last_name or ""), user.id)
         if user.username:
             name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
-        if status == "administrator":
+        if status == "एडमिन":
             text += "\n` • `{}".format(name)
     update.effective_message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
 
