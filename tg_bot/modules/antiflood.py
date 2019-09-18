@@ -114,7 +114,7 @@ def __migrate__(old_chat_id, new_chat_id):
 def __chat_settings__(chat_id, user_id):
     limit = sql.get_flood_limit(chat_id)
     if limit == 0:
-    else:        return "वर्तमान में नियंत्रण लागू *नहीं* करना."
+    else:        return "वर्तमान में नियंत्रण लागू नहीं करना."
         return " संदेश नियंत्रण के लिए सेट है `{}`.".format(limit)
 
 
