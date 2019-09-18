@@ -35,7 +35,7 @@ def check_flood(bot: Bot, update: Update) -> str:
 
     try:
         chat.kick_member(user.id)
-        msg.reply_text("dont disturb others you are No need for this group anymore...")
+        msg.reply_text("अन्य लोगों को परेशान न करें जिन्हें अब आपको इस समूह की कोई आवश्यकता नहीं है...")
 
         return "<b>{}:</b>" \
                "\n#BANNED" \
@@ -44,11 +44,11 @@ def check_flood(bot: Bot, update: Update) -> str:
                                              mention_html(user.id, user.first_name))
 
     except BadRequest:
-        msg.reply_text("You cannot use this service as long as you do not give me Permissions.")
+        msg.reply_text("आप इस सेवा का उपयोग तब तक नहीं कर सकते जब तक आप मुझे परमिशन नहीं देते.")
         sql.set_flood(chat.id, 0)
         return "<b>{}:</b>" \
                "\n#INFO" \
-               "\nDon't have kick permissions, so automatically disabled antiflood.".format(chat.title)
+               "\nकिक की अनुमति नहीं है, इसलिए एंटिफ्लड रोक दिए गए हैं.".format(chat.title)
 
 
 @run_async
@@ -64,13 +64,13 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
         val = args[0].lower()
         if val == "off" or val == "no" or val == "0":
             sql.set_flood(chat.id, 0)
-            message.reply_text("I will no longer dismiss those who flood.")
+            message.reply_text("मैं अब स्पैम करने वालों को माफ नहीं करूंगा.")
 
         elif val.isdigit():
             amount = int(val)
             if amount <= 0:
                 sql.set_flood(chat.id, 0)
-                message.reply_text("I will no longer dismiss those who flood.")
+                message.reply_text("मैं अब स्पैम करने वालों को माफ नहीं करूंगा.")
                 return "<b>{}:</b>" \
                        "\n#SETFLOOD" \
                        "\n<b>Admin:</b> {}" \
@@ -90,7 +90,7 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
                                                                     mention_html(user.id, user.first_name), amount)
 
         else:
-            message.reply_text("I don't understand what you're saying .... Either use the number or use Yes-No")
+            message.reply_text("मुझे समझ नहीं आ रहा है कि आप क्या कह रहे हैं .... या तो नंबर का उपयोग करें या हाँ-नहीं का उपयोग करें")
 
     return ""
 
@@ -101,10 +101,10 @@ def flood(bot: Bot, update: Update):
 
     limit = sql.get_flood_limit(chat.id)
     if limit == 0:
-        update.effective_message.reply_text("I am not doing message control right now!")
+        update.effective_message.reply_text("मैं अभी मैसेज कंट्रोल नहीं कर रहा हूं!")
     else:
         update.effective_message.reply_text(
-            " {} I'll leave the bun to the person who sends the message more at the same time.".format(limit))
+            " {} मैं एक ही समय में संदेश भेजने वाले व्यक्ति को छोड़ दूंगा".format(limit))
 
 
 def __migrate__(old_chat_id, new_chat_id):
@@ -114,9 +114,8 @@ def __migrate__(old_chat_id, new_chat_id):
 def __chat_settings__(chat_id, user_id):
     limit = sql.get_flood_limit(chat_id)
     if limit == 0:
-        return "*Not* currently enforcing flood control."
-    else:
-        return " The message control is set to `{}`.".format(limit)
+    else:        return "वर्तमान में नियंत्रण लागू *नहीं* करना."
+        return " संदेश नियंत्रण के लिए सेट है `{}`.".format(limit)
 
 
 __help__ = """
