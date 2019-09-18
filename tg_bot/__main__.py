@@ -18,38 +18,35 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-Hoi {}, my name is {}! I'm here to help you manage your groups!. Need Any Help Join Our Support Group ( @MenheraChanSupport) 
+नमस्ते {}, मेरा नाम {} है! मैं यहां आपके ग्रूप को मैनज करने में आपकी सहायता करने के लिए हूं!.किसी भी मदद की ज़रूरत है हमारे सहायता ग्रूप में शामिल हों (@MenheraChanSupport) 
 
-I'm a group manager bot maintained by this[sexy boi](tg://user?id={}) I'm built in python3, using the python-telegram-bot library.
+मैं ग्रुप मैनेजर बॉट हूं,मेरे भगवान [ये](tg://user?id={}) है,मुझे python3 में बनाया गया है,python-telegram-bot library का उपयोग करके
 
-You can find the list of available commands with /help.
+/help से कमांड का पता लगाये
 
-If you're enjoying using me, and or would like to help me survive in the wild, hit /donate to help fund/upgrade my VPS!
+यदि आप मुझे इस्तेमाल करने का आनंद ले रहे हैं, और मुझे जीवित रहने में मदद करना चाहते हैं, फिर हमें कुछ दान करें /donate पर क्लिक करके
 
-[Click here to add me in your groups](t.me/MenheraChan_Bot?startgroup=true)"
+[मुझे अपने ग्रूप में जोड़ने के लिए यहां क्लिक करें](t.me/MenheraChan_Bot?startgroup=true)"
 """ 
 
 HELP_STRINGS = """
 
-Hello! my name *{}*.
+नमस्ते! मेरा नाम *{}*.
 
-*Main* available commands:
- - /start: Start the bot...
- - /help: help....
- - /donate: To find out more about donating!
+*मुख्य* उपलब्ध कमांड:
+ - /start: बॉट शुरू करने के लिए...
+ - /help: मदद....
+ - /donate: दान के बारे में और जानकारी के लिए!
  - /settings:
-   - in PM: To find out what SETTINGS you have set....
-   - in a group:
+   - PM में: यह पता लगाने के लिए कि आपने क्या सेटिंग की है ...।
 
+   - एक ग्रूप में:
 {}
-And the following:
-""".format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll of the following commands  / or ! can  be used...\n")
+और निम्नलिखित:
+""".format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nनिम्नलिखित सभी कमांड / या! इस्तेमाल किया जा सकता है...\n")
 
-DONATE_STRING = """Heya, glad to hear you want to donate!
-It took lots of work for [my creator](t.me/TheDarkW3b) to get me to where I am now, and every donation helps \
-motivate him to make me even better. All the donation money will go to a better VPS to host me, and/or beer \
-(see his bio!). He's just a poor student, so every little helps!
-If You Really Wanna Donate Pay to My [Master](t.me/TheDarkW3b) """
+DONATE_STRING = """हे, तुम दान करना चाहते सुनने में मुझे अच्छा लगा! सभी दान का पैसा बेहतर वीपीएस में जाएगा मुझे होस्ट करने के लिए,\
+तुम सच में मेरे लिए दान करना चाहते हैं,इसे मेरे [भगवान](t.me/TheDarkW3b) को दे दो """
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -141,7 +138,7 @@ def start(bot: Bot, update: Update, args: List[str]):
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN)
     else:
-        update.effective_message.reply_text("Hoi! Don't Worry I am Alive :-)")
+        update.effective_message.reply_text("अरे!अभी भी मैं जिंदा हूँ :-)")
 
 
 # for test purposes
@@ -231,16 +228,16 @@ def get_help(bot: Bot, update: Update):
     # ONLY send help in PM
     if chat.type != chat.PRIVATE:
 
-        update.effective_message.reply_text("Contact me in PM to get the list of possible commands.",
+        update.effective_message.reply_text("कमांड की सूची प्राप्त करने के लिए पीएम में मुझसे संपर्क करें।.",
                                             reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="Help",
+                                                [[InlineKeyboardButton(text="मदद",
                                                                        url="t.me/{}?start=help".format(
                                                                            bot.username))]]))
         return
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
-        text = "Here is the available help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
+        text = "यहाँ उपलब्ध मदद के लिए है *{}* module:\n".format(HELPABLE[module].__mod_name__) \
                + HELPABLE[module].__help__
         send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
@@ -253,24 +250,24 @@ def send_settings(chat_id, user_id, user=False):
         if USER_SETTINGS:
             settings = "\n\n".join(
                 "*{}*:\n{}".format(mod.__mod_name__, mod.__user_settings__(user_id)) for mod in USER_SETTINGS.values())
-            dispatcher.bot.send_message(user_id, "These are your current settings:" + "\n\n" + settings,
+            dispatcher.bot.send_message(user_id, "ये आपकी वर्तमान सेटिंग्स हैं:" + "\n\n" + settings,
                                         parse_mode=ParseMode.MARKDOWN)
 
         else:
-            dispatcher.bot.send_message(user_id, "Seems like there aren't any user specific settings available :'(",
+            dispatcher.bot.send_message(user_id, "ऐसा लगता है कि कोई उपयोगकर्ता सेटिंग्स उपलब्ध नहीं हैं :'(",
                                         parse_mode=ParseMode.MARKDOWN)
 
     else:
         if CHAT_SETTINGS:
             chat_name = dispatcher.bot.getChat(chat_id).title
             dispatcher.bot.send_message(user_id,
-                                        text="Which module would you like to check {}'s settings for?".format(
+                                        text="आप किस मॉड्यूल की जाँच करना चाहेंगे? {}'सेटिंग्स के लिए?".format(
                                             chat_name),
                                         reply_markup=InlineKeyboardMarkup(
                                             paginate_modules(0, CHAT_SETTINGS, "stngs", chat=chat_id)))
         else:
-            dispatcher.bot.send_message(user_id, "Seems like there aren't any chat settings available :'(\nSend this "
-                                                 "in a group chat you're admin in to find its current settings!",
+            dispatcher.bot.send_message(user_id, "ऐसा लगता है कि कोई चैट सेटिंग उपलब्ध नहीं है :'(\nइसे उस "
+                                                 "समूह चैट में भेजें जिसे आप इसकी वर्तमान सेटिंग खोजने के लिए व्यवस्थापक हैं",
                                         parse_mode=ParseMode.MARKDOWN)
 
 
@@ -287,7 +284,7 @@ def settings_button(bot: Bot, update: Update):
             chat_id = mod_match.group(1)
             module = mod_match.group(2)
             chat = bot.get_chat(chat_id)
-            text = "*{}* has the following settings for the *{}* module:\n\n".format(escape_markdown(chat.title),
+            text = "*{}* निम्नलिखित सेटिंग्स के लिए है *{}* module:\n\n".format(escape_markdown(chat.title),
                                                                                      CHAT_SETTINGS[module].__mod_name__) + \
                    CHAT_SETTINGS[module].__chat_settings__(chat_id, user.id)
             query.message.reply_text(text=text,
@@ -300,8 +297,8 @@ def settings_button(bot: Bot, update: Update):
             chat_id = prev_match.group(1)
             curr_page = int(prev_match.group(2))
             chat = bot.get_chat(chat_id)
-            query.message.reply_text("Hi there! There are quite a few settings for {} - go ahead and pick what "
-                                     "you're interested in.".format(chat.title),
+            query.message.reply_text("नमस्ते!आपके के लिए काफी कुछ सेटिंग्स हैं {} - आगे बढ़ो और देखो "
+                                     "आप में रुचि रखते हैं".format(chat.title),
                                      reply_markup=InlineKeyboardMarkup(
                                          paginate_modules(curr_page - 1, CHAT_SETTINGS, "stngs",
                                                           chat=chat_id)))
@@ -310,8 +307,8 @@ def settings_button(bot: Bot, update: Update):
             chat_id = next_match.group(1)
             next_page = int(next_match.group(2))
             chat = bot.get_chat(chat_id)
-            query.message.reply_text("Hi there! There are quite a few settings for {} - go ahead and pick what "
-                                     "you're interested in.".format(chat.title),
+            query.message.reply_text("नमस्ते!आपके के लिए काफी कुछ सेटिंग्स हैं {} -आगे बढ़ो और देखो "
+                                     "आप में रुचि रखते हैं.".format(chat.title),
                                      reply_markup=InlineKeyboardMarkup(
                                          paginate_modules(next_page + 1, CHAT_SETTINGS, "stngs",
                                                           chat=chat_id)))
@@ -319,8 +316,8 @@ def settings_button(bot: Bot, update: Update):
         elif back_match:
             chat_id = back_match.group(1)
             chat = bot.get_chat(chat_id)
-            query.message.reply_text(text="Hi there! There are quite a few settings for {} - go ahead and pick what "
-                                          "you're interested in.".format(escape_markdown(chat.title)),
+            query.message.reply_text(text="नमस्ते!आपके के लिए काफी कुछ सेटिंग्स हैं {} - आगे बढ़ो और देखो "
+                                          "आप में रुचि रखते हैं".format(escape_markdown(chat.title)),
                                      parse_mode=ParseMode.MARKDOWN,
                                      reply_markup=InlineKeyboardMarkup(paginate_modules(0, CHAT_SETTINGS, "stngs",
                                                                                         chat=chat_id)))
@@ -349,10 +346,10 @@ def get_settings(bot: Bot, update: Update):
     # ONLY send settings in PM
     if chat.type != chat.PRIVATE:
         if is_user_admin(chat, user.id):
-            text = "Click here to get this chat's settings, as well as yours."
+            text = "इस चैट की सेटिंग पाने के लिए यहां क्लिक करें, साथ ही आपका भी."
             msg.reply_text(text,
                            reply_markup=InlineKeyboardMarkup(
-                               [[InlineKeyboardButton(text="Settings",
+                               [[InlineKeyboardButton(text="सेटिंग",
                                                       url="t.me/{}?start=stngs_{}".format(
                                                           bot.username, chat.id))]]))
         else:
@@ -395,11 +392,11 @@ def migrate_chats(bot: Bot, update: Update):
     else:
         return
 
-    LOGGER.info("Migrating from %s, to %s", str(old_chat), str(new_chat))
+    LOGGER.info("पलायन कर रहा है %s, से %s", str(old_chat), str(new_chat))
     for mod in MIGRATEABLE:
         mod.__migrate__(old_chat, new_chat)
 
-    LOGGER.info("Successfully migrated!")
+    LOGGER.info("सफलतापूर्वक पलायन कर गया!")
     raise DispatcherHandlerStop
 
 
