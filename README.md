@@ -4,7 +4,7 @@
 
 
 
-This Is The Hindi Version Of Bot Menhera Powered By [Marie](https://t.me/BanhammerMarie_bot]
+This Is The Hindi Version Of Bot Menhera Powered By [Marie](https://t.me/BanhammerMarie_bot)
 
 A modular telegram Python bot running on python3 with an sqlalchemy database.
 
