@@ -50,19 +50,19 @@ def gban(bot: Bot, update: Update, args: List[str]):
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("आप किसी यूजर की बात नहीं कर रहे हैं")
         return
 
     if int(user_id) in SUDO_USERS:
-        message.reply_text("I spy, with my little eye... a sudo user war! Why are you guys turning on each other?")
+        message.reply_text("एक अमीर आदमी दूसरे अमीर लड़के को नहीं निकाल सकता, दोनों मेरे के सूडो हैं")
         return
 
     if int(user_id) in SUPPORT_USERS:
-        message.reply_text("OOOH someone's trying to gban a support user! *grabs popcorn*")
+        message.reply_text("क्यों मेरे निर्माताओं को हटाने की कोशिश कर रहे हैं!")
         return
 
     if user_id == bot.id:
-        message.reply_text("-_- So funny, lets gban myself why don't I? Nice try.")
+        message.reply_text("-_- इतना मज़ेदार, मैं अपने आप को gban दूं? अच्छा प्रयासI.")
         return
 
     try:
@@ -72,26 +72,26 @@ def gban(bot: Bot, update: Update, args: List[str]):
         return
 
     if user_chat.type != 'private':
-        message.reply_text("That's not a user!")
+        message.reply_text("यह एक यूजर नहीं है!")
         return
 
     if sql.is_user_gbanned(user_id):
         if not reason:
-            message.reply_text("This user is already gbanned; I'd change the reason, but you haven't given me one...")
+            message.reply_text("यह यूजर पहले से ही gbanned है; मैं कारण बदल सकता हूं, लेकिन आपने मुझे दिया नहीं...")
             return
 
         old_reason = sql.update_gban_reason(user_id, user_chat.username or user_chat.first_name, reason)
         if old_reason:
-            message.reply_text("This user is already gbanned, for the following reason:\n"
+            message.reply_text("यह यूजर पहले से ही gbanned है, कारण:\n"
                                "<code>{}</code>\n"
-                               "I've gone and updated it with your new reason!".format(html.escape(old_reason)),
+                               "मैंने आपके नए कारण से इसे अपडेट किया है!".format(html.escape(old_reason)),
                                parse_mode=ParseMode.HTML)
         else:
-            message.reply_text("This user is already gbanned, but had no reason set; I've gone and updated it!")
+            message.reply_text("यह यूजर पहले से ही gbanned है; मैंने आपके नए कारण से इसे अपडेट किया है!!")
 
         return
 
-    message.reply_text("⚡️ *Another Bitch Goes Off* ⚡️")
+    message.reply_text("⚡️ *मैंने उसकी पसलियाँ तोड़ दीं* ⚡️")
 
     banner = update.effective_user  # type: Optional[User]
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
@@ -130,9 +130,9 @@ def gban(bot: Bot, update: Update, args: List[str]):
             pass
 
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS, 
-                  "{} has been successfully gbanned!".format(mention_html(user_chat.id, user_chat.first_name)),
+                  "{} Successfully Gbanned!".format(mention_html(user_chat.id, user_chat.first_name)),
                 html=True)
-    message.reply_text("Person has been gbanned.")
+    message.reply_text("सफलतापूर्वक gbanned किया गया.")
 
 
 @run_async
@@ -141,21 +141,21 @@ def ungban(bot: Bot, update: Update, args: List[str]):
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("आप किसी यूजर की बात नहीं कर रहे हैं")
         return
 
     user_chat = bot.get_chat(user_id)
     if user_chat.type != 'private':
-        message.reply_text("That's not a user!")
+        message.reply_text("यह यूजर नहीं है!")
         return
 
     if not sql.is_user_gbanned(user_id):
-        message.reply_text("This user is not gbanned!")
+        message.reply_text("यह यूजर gban नहीं है!")
         return
 
     banner = update.effective_user  # type: Optional[User]
 
-    message.reply_text("I pardon {}, globally with a second chance.".format(user_chat.first_name))
+    message.reply_text("gban से माफ़ किया गया है".format(user_chat.first_name))
 
     send_to_list(bot, SUDO_USERS + SUPPORT_USERS,
                  "<b>Regression of Global Ban</b>" \
@@ -198,7 +198,7 @@ def ungban(bot: Bot, update: Update, args: List[str]):
                                                                          user_chat.first_name)),
                   html=True)
 
-    message.reply_text("This person has been un-gbanned and pardon is granted!")
+    message.reply_text("gban से माफ़ किया गया है!")
 
 
 @run_async
@@ -301,9 +301,11 @@ __help__ = """
 *Admin only:*
  - /gbanstat <on/off/yes/no>: Will disable the effect of global bans on your group, or return your current settings.
 
-Gbans, also known as global bans, are used by the bot owners to ban spammers across all groups. This helps protect \
-you and your groups by removing spam flooders as quickly as possible. They can be disabled for you group by calling \
-/gbanstat
+Gbans, ग्लोबल बैन के रूप में भी जाना जाता है, बॉट मालिकों द्वारा सभी ग्रुप में स्पैमर पर प्रतिबंध लगाने के लिए उपयोग किया जाता है। यह सुरक्षा में मदद करता है \
+
+जितनी जल्दी हो सके स्पैम बाढ़ को हटाकर आप और आपके ग्रुप। वे आपको कॉल करके ग्रुप के लिए अक्षम कर सकते हैं \
+
+/ gbanstat
 """
 
 __mod_name__ = "Global Bans"
