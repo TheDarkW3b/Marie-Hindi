@@ -37,7 +37,7 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
     split_text = split_message(filter_list)
     for text in split_text:
         if text == BASE_BLACKLIST_STRING:
-            msg.reply_text"यहां कोई ब्लैक लिस्टेड मैसेज नहीं हैं!")
+            msg.reply_text("यहां कोई ब्लैक लिस्टेड मैसेज नहीं हैं!")
             return
         msg.reply_text(text, parse_mode=ParseMode.HTML)
 
