@@ -38,8 +38,8 @@ def send_rules(update, chat_id, from_pm=False):
     if from_pm and rules:
         bot.send_message(user.id, text, parse_mode=ParseMode.MARKDOWN)
     elif from_pm:
-        bot.send_message(user.id, "ग्रुप के एडमिन ने अभी तक इस चैट के लिए कोई नियम निर्धारित नहीं किए हैं। "                                
-                                  "इसका मतलब यह नहीं आप कुछ भी कर सकते हैं !"))
+        bot.send_message(user.id, "ग्रुप के एडमिन ने अभी तक इस चैट के लिए कोई नियम निर्धारित नहीं किए हैं।"                                
+                                  "इसका मतलब यह नहीं आप कुछ भी कर सकते हैं!")
     elif rules:
         update.effective_message.reply_text("इस ग्रुप के नियम प्राप्त करने के लिए पीएम से संपर्क करें.",
                                             reply_markup=InlineKeyboardMarkup(
