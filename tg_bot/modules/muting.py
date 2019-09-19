@@ -25,22 +25,22 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("You'll need to either give me a username to mute, or reply to someone to be muted.")
+        message.reply_text("आपको या तो मुझे म्यूट करने के लिए एक यूज़रनेम देना होगा, या किसी को म्यूट करने का जवाब देना होगा.")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I'm not muting myself!")
+        message.reply_text("मैं खुद को म्यूट नहीं कर रहा हूं!!")
         return ""
 
     member = chat.get_member(int(user_id))
 
     if member:
         if is_user_admin(chat, user_id, member=member):
-            message.reply_text("Afraid I can't stop an admin from talking!")
+            message.reply_text("डर लगता है,कि मैं एक एडमिन को बात करने से रोकने की कोशिश करना!")
 
         elif member.can_send_messages is None or member.can_send_messages:
             bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
-            message.reply_text("👍🏻 muted! 🤐")
+            message.reply_text("👍🏻 म्यूट! 🤐")
             return "<b>{}:</b>" \
                    "\n#MUTE" \
                    "\n<b>Admin:</b> {}" \
@@ -49,9 +49,9 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
                                               mention_html(member.user.id, member.user.first_name))
 
         else:
-            message.reply_text("This user is already muted!")
+            message.reply_text("यह यूजर पहले से ही म्यूट है!")
     else:
-        message.reply_text("This user isn't in the chat!")
+        message.reply_text("यह यूजर चैट में नहीं है!")
 
     return ""
 
@@ -67,7 +67,7 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("You'll need to either give me a username to unmute, or reply to someone to be unmuted.")
+        message.reply_text("आपको या तो मुझे म्यूट करने के लिए एक यूज़रनेम देना होगा, या किसी को म्यूट करने का जवाब देना होगा")
         return ""
 
     member = chat.get_member(int(user_id))
@@ -75,14 +75,14 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
     if member.status != 'kicked' and member.status != 'left':
         if member.can_send_messages and member.can_send_media_messages \
                 and member.can_send_other_messages and member.can_add_web_page_previews:
-            message.reply_text("This user already has the right to speak.")
+            message.reply_text("उसे बोलने का अधिकार है")
         else:
             bot.restrict_chat_member(chat.id, int(user_id),
                                      can_send_messages=True,
                                      can_send_media_messages=True,
                                      can_send_other_messages=True,
                                      can_add_web_page_previews=True)
-            message.reply_text("Unmuted!")
+            message.reply_text("अनम्यूट💥!")
             return "<b>{}:</b>" \
                    "\n#UNMUTE" \
                    "\n<b>Admin:</b> {}" \
@@ -90,8 +90,7 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
                                               mention_html(user.id, user.first_name),
                                               mention_html(member.user.id, member.user.first_name))
     else:
-        message.reply_text("This user isn't even in the chat, unmuting them won't make them talk more than they "
-                           "already do!")
+        message.reply_text("यह यूजर चैट में भी नहीं है, उन्हें अनम्यूट करने से वे उनसे अधिक बात नहीं करेंगे")
 
     return ""
 
