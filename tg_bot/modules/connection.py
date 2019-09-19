@@ -35,8 +35,6 @@ def allow_connections(bot: Bot, update: Update, args: List[str]) -> str:
                 update.effective_message.reply_text("कृप्या ग्रुप में on/yes/off/no टाइप करे!")
         else:
             update.effective_message.reply_text("कृप्या ग्रुप में on/yes/off/no टाइप करे!")
-
-)
     else:
         update.effective_message.reply_text("कृप्या ग्रुप में on/yes/off/no टाइप करे!")
 )
