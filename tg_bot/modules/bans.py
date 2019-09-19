@@ -36,7 +36,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
         member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            message.reply_text("मुझे यूजर नहीं मिल रहा है)
+            message.reply_text("मुझे यूजर नहीं मिल रहा है")
             return ""
         else:
             raise
