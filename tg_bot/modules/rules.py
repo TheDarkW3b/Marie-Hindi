@@ -26,7 +26,8 @@ def send_rules(update, chat_id, from_pm=False):
         chat = bot.get_chat(chat_id)
     except BadRequest as excp:
         if excp.message == "Chat not found" and from_pm:
-            bot.send_message(user.id, "इस चैट के लिए नियम शॉर्टकट ठीक से सेट नहीं किए गए हैं! एडमिन से पूछें "                                       "इसे ठीक करो
+            bot.send_message(user.id, "इस चैट के लिए नियम शॉर्टकट ठीक से सेट नहीं किए गए हैं! एडमिन से पूछें"
+                                      "इसे ठीक करो")
             return
         else:
             raise
