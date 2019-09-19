@@ -26,7 +26,7 @@ PM_START_TEXT = """
 
 यदि आप मुझे इस्तेमाल करने का आनंद ले रहे हैं, और मुझे जीवित रहने में मदद करना चाहते हैं, फिर हमें कुछ दान करें /donate पर क्लिक करके
 
-[मुझे अपने ग्रूप में जोड़ने के लिए यहां क्लिक करें](t.me/MenheraChan_Bot?startgroup=true)"
+[मुझे अपने ग्रूप में जोड़ने के लिए यहां क्लिक करें](https://telegram.me/HindiMarie_bot?startgroup=add)"
 """ 
 
 HELP_STRINGS = """
