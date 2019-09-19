@@ -26,30 +26,29 @@ def send_rules(update, chat_id, from_pm=False):
         chat = bot.get_chat(chat_id)
     except BadRequest as excp:
         if excp.message == "Chat not found" and from_pm:
-            bot.send_message(user.id, "The rules shortcut for this chat hasn't been set properly! Ask admins to "
-                                      "fix this.")
+            bot.send_message(user.id, "इस चैट के लिए नियम शॉर्टकट ठीक से सेट नहीं किए गए हैं! एडमिन से पूछें "                                       "इसे ठीक करो
             return
         else:
             raise
 
     rules = sql.get_rules(chat_id)
-    text = "The rules for *{}* are:\n\n{}".format(escape_markdown(chat.title), rules)
+    text = " *{}* के लिए नियम है:\n\n{}".format(escape_markdown(chat.title), rules)
 
     if from_pm and rules:
         bot.send_message(user.id, text, parse_mode=ParseMode.MARKDOWN)
     elif from_pm:
-        bot.send_message(user.id, "The group admins haven't set any rules for this chat yet. "
-                                  "This probably doesn't mean it's lawless though...!")
+        bot.send_message(user.id, "ग्रुप के एडमिन ने अभी तक इस चैट के लिए कोई नियम निर्धारित नहीं किए हैं। "                                
+                                  "इसका मतलब यह नहीं आप कुछ भी कर सकते हैं !"))
     elif rules:
-        update.effective_message.reply_text("Contact me in PM to get this group's rules.",
+        update.effective_message.reply_text("इस ग्रुप के नियम प्राप्त करने के लिए पीएम से संपर्क करें.",
                                             reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text="Rules",
                                                                        url="t.me/{}?start={}".format(bot.username,
                                                                                                      chat_id))]]))
     else:
-        update.effective_message.reply_text("The group admins haven't set any rules for this chat yet. "
-                                            "This probably doesn't mean it's lawless though...!")
+        update.effective_message.reply_text(" ग्रुप के एडमिन ने अभी तक इस चैट के लिए कोई नियम निर्धारित नहीं किए हैं। "                                
 
+                                  "इसका मतलब यह नहीं आप कुछ भी कर सकते हैं !")
 
 @run_async
 @user_admin
@@ -64,7 +63,7 @@ def set_rules(bot: Bot, update: Update):
         markdown_rules = markdown_parser(txt, entities=msg.parse_entities(), offset=offset)
 
         sql.set_rules(chat_id, markdown_rules)
-        update.effective_message.reply_text("Successfully set rules for this group.")
+        update.effective_message.reply_text("इस ग्रुप के लिए सफलतापूर्वक नियम निर्धारित करें.")
 
 
 @run_async
@@ -72,7 +71,7 @@ def set_rules(bot: Bot, update: Update):
 def clear_rules(bot: Bot, update: Update):
     chat_id = update.effective_chat.id
     sql.set_rules(chat_id, "")
-    update.effective_message.reply_text("Successfully cleared rules!")
+    update.effective_message.reply_text("सफलतापूर्वक साफ़ किए गए नियम!")
 
 
 def __stats__():
@@ -94,11 +93,11 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /rules: get the rules for this chat.
+ - /rules:इस चैट के नियम प्राप्त करें.
 
 *Admin only:*
- - /setrules <your rules here>: set the rules for this chat.
- - /clearrules: clear the rules for this chat.
+ - /setrules <your rules here>: इस चैट के लिए नियम निर्धारित करें
+ - /clearrules: इस चैट के नियम साफ़ करें.
 """
 
 __mod_name__ = "Rules"
