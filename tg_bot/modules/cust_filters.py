@@ -20,7 +20,7 @@ from tg_bot.modules.sql import cust_filters_sql as sql
 from tg_bot.modules.connection import connected
 
 HANDLER_GROUP = 10
-BASIC_FILTER_STRING = "*Filters in this chat:*\n"
+BASIC_FILTER_STRING = "*इस चैट में फिल्टर:*\n"
 
 
 @run_async
@@ -46,7 +46,7 @@ def list_handlers(bot: Bot, update: Update):
     all_handlers = sql.get_chat_triggers(chat_id)
 
     if not all_handlers:
-        update.effective_message.reply_text("No filters in {}!".format(chat_name))
+        update.effective_message.reply_text("{} में कोई फिल्टर नहीं!".format(chat_name))
         return
 
     for keyword in all_handlers:
@@ -103,7 +103,7 @@ def filters(bot: Bot, update: Update):
         content, buttons = button_markdown_parser(extracted[1], entities=msg.parse_entities(), offset=offset)
         content = content.strip()
         if not content:
-            msg.reply_text("There is no note message - You can't JUST have buttons, you need a message to go with it!")
+            msg.reply_text("कोई नोट मैसेज नहीं है - आपके पास बस बटन नहीं हो सकते हैं, आपको इसके साथ जाने के लिए मैसेज की आवश्यकता है!")
             return
 
     elif msg.reply_to_message and msg.reply_to_message.sticker:
@@ -133,7 +133,7 @@ def filters(bot: Bot, update: Update):
         is_video = True
 
     else:
-        msg.reply_text("You didn't specify what to reply with!")
+        msg.reply_text("आपने निर्दिष्ट नहीं किया कि किसके साथ क्या उत्तर देना है")
         return
 
     # Add the filter
@@ -145,7 +145,7 @@ def filters(bot: Bot, update: Update):
     sql.add_filter(chat_id, keyword, content, is_sticker, is_document, is_image, is_audio, is_voice, is_video,
                    buttons)
 
-    msg.reply_text("Handler '{}' added in *{}*!".format(keyword, chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
+    msg.reply_text("हैंडलर '{}' एडेड इन *{}*!".format(keyword, chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
     raise DispatcherHandlerStop
 
 
@@ -173,16 +173,16 @@ def stop_filter(bot: Bot, update: Update):
     chat_filters = sql.get_chat_triggers(chat_id)
 
     if not chat_filters:
-        update.effective_message.reply_text("No filters are active here!")
+        update.effective_message.reply_text("कोई भी फ़िल्टर यहां एक्टिव नहीं है!")
         return
 
     for keyword in chat_filters:
         if keyword == args[1]:
             sql.remove_filter(chat_id, args[1])
-            update.effective_message.reply_text("Yep, I'll stop replying to that in *{}*.".format(chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
+            update.effective_message.reply_text("हां, मैं *{}* में जवाब देना बंद कर दूंगा.".format(chat_name), parse_mode=telegram.ParseMode.MARKDOWN)
             raise DispatcherHandlerStop
 
-    update.effective_message.reply_text("That's not a current filter - run /filters for all active filters.")
+    update.effective_message.reply_text("यह वर्तमान फिल्टर नहीं है - सभी सक्रिय फिल्टर के लिए /filter पर क्लिक करें ")
 
 
 @run_async
@@ -238,14 +238,14 @@ def reply_filter(bot: Bot, update: Update):
                     if excp.message == "Unsupported url protocol":
                         message.reply_text("You seem to be trying to use an unsupported url protocol. Telegram "
                                            "doesn't support buttons for some protocols, such as tg://. Please try "
-                                           "again, or ask in @MarieSupport for help.")
+                                           "again, or ask in @Menherachan_bot for help.")
                     elif excp.message == "Reply message not found":
                         bot.send_message(chat.id, filt.reply, parse_mode=ParseMode.MARKDOWN,
                                          disable_web_page_preview=True,
                                          reply_markup=keyboard)
                     else:
                         message.reply_text("This note could not be sent, as it is incorrectly formatted. Ask in "
-                                           "@MarieSupport if you can't figure out why!")
+                                           "@Menherachan_bot if you can't figure out why!")
                         LOGGER.warning("Message %s could not be parsed", str(filt.reply))
                         LOGGER.exception("Could not parse filter %s in chat %s", str(filt.keyword), str(chat.id))
 
@@ -269,14 +269,14 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /filters: list all active filters in this chat.
+ - /filters: चैट में सभी एक्टिव फ़िल्टर जाने 
 
 *Admin only:*
- - /filter <keyword> <reply message>: add a filter to this chat. The bot will now reply that message whenever 'keyword'\
-is mentioned. If you reply to a sticker with a keyword, the bot will reply with that sticker. NOTE: all filter \
-keywords are in lowercase. If you want your keyword to be a sentence, use quotes. eg: /filter "hey there" How you \
-doin?
- - /stop <filter keyword>: stop that filter.
+ - /filter <keyword> <reply message>: इस चैट में एक फ़िल्टर जोड़ें। बॉट अब उस मैसेज का जवाब देगा जब भी 'कीवर्ड'
+मैच है। यदि आप किसी कीवर्ड के साथ स्टिकर का जवाब देते हैं, तो बॉट उस स्टिकर के साथ जवाब देगा। नोट: सभी फ़िल्टर \
+कीवर्ड लोअरकेस में हैं। यदि आप चाहते हैं कि आपका कीवर्ड एक वाक्य हो, तो उद्धरणों का उपयोग करें। जैसे: /filter "हे वहाँ" आप कैसे हैं
+कर रहा?
+ - /stop <filter keyword>: फ़िल्टर को रोकें.
 """
 
 __mod_name__ = "Filters"
