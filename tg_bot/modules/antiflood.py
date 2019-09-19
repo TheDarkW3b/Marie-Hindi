@@ -77,12 +77,12 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
                        "\nDisabled antiflood.".format(html.escape(chat.title), mention_html(user.id, user.first_name))
 
             elif amount < 3:
-                message.reply_text("Antiflood has to be either 0 (disabled), or a number bigger than 3!")
+                message.reply_text("एंटीफ्लड 0 हे या 3 से बड़ी संख्या में हे!")
                 return ""
 
             else:
                 sql.set_flood(chat.id, amount)
-                message.reply_text("Message control {} has been added to count ".format(amount))
+                message.reply_text("एंटीफ्लड {} को सेट कर दिया है ".format(amount))
                 return "<b>{}:</b>" \
                        "\n#SETFLOOD" \
                        "\n<b>Admin:</b> {}" \
@@ -90,7 +90,7 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
                                                                     mention_html(user.id, user.first_name), amount)
 
         else:
-            message.reply_text("मुझे समझ नहीं आ रहा है कि आप क्या कह रहे हैं .... या तो नंबर का उपयोग करें या हाँ-नहीं का उपयोग करें")
+            message.reply_text("मुझे समझ नहीं आ रहा है कि आप क्या कह रहे हैं .... या तो नंबर का उपयोग करें या Yes/No का उपयोग करें")
 
     return ""
 
