@@ -29,24 +29,24 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("आप किसी यूजर को टैग नहीं कर रहे हैं")
         return ""
 
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user...")
+            message.reply_text("मुझे यूजर नहीं मिल रहा है)
             return ""
         else:
             raise
 
     if is_user_ban_protected(chat, user_id, member):
-        message.reply_text("I really wish I could ban admins...")
+        message.reply_text("कास मैं एडमिन्स को हटा सकता ")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna BAN myself, are you crazy?")
+        message.reply_text("मैं खुद को हटाने वाला नहीं हूं, आप पागल हैं)
         return ""
 
     log = "<b>{}:</b>" \
@@ -56,10 +56,10 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
           "\n<b>• ID:</b> <code>{}</code>".format(html.escape(chat.title), mention_html(user.id, user.first_name), 
                                                   mention_html(member.user.id, member.user.first_name), user_id)
 
-    reply = "{} Banned!" .format(mention_html(member.user.id, member.user.first_name))
+    reply = "{} को निकाल दिया!" .format(mention_html(member.user.id, member.user.first_name))
     if reason:
         log += "\n<b>• Reason:</b> {}".format(reason)
-        reply += "\n<b>Reason:</b> <i>{}</i>".format(reason)
+        reply += "\n<b>कारण:</b> <i>{}</i>".format(reason)
 
     try:
         chat.kick_member(user_id)
@@ -69,15 +69,15 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
         return log
 
     except BadRequest as excp:
-        if excp.message == "Reply message not found":
+        if excp.message == "Reply Message Not Found":
             # Do not reply
-            message.reply_text('Reply message not found...!', quote=False)
+            message.reply_text('रिप्लाई मैसेज नहीं मिला...!', quote=False)
             return log
         else:
             LOGGER.warning(update)
             LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
                              excp.message)
-            message.reply_text("Well damn, I can't ban that user.")
+            message.reply_text("मैं उसे हटा नहीं सकता")
 
     return ""
 
@@ -95,28 +95,28 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
     user_id, reason = extract_user_and_text(message, args)
 
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("आप किसी यूजर को टैग नहीं कर रहे हैं")
         return ""
 
     try:
         member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user")
+            message.reply_text("मुझे यूजर नहीं मिल रहा है")
             return ""
         else:
             raise
 
     if is_user_ban_protected(chat, user_id, member):
-        message.reply_text("I really wish I could ban admins...")
+        message.reply_text("कास मैं एडमिन्स को हटा सकता")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna BAN myself, are you crazy?")
+        message.reply_text("मैं खुद को हटाने वाला नहीं हूं, आप पागल हैं")
         return ""
 
     if not reason:
-        message.reply_text("You haven't specified a time to ban this user for!")
+        message.reply_text("आपने इस यूजर को निकालने के लिए एक समय नहीं दिया है")
         return ""
 
     split_reason = reason.split(None, 1)
@@ -141,26 +141,26 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
                                                                 mention_html(member.user.id, member.user.first_name), 
                                                                              user_id, time_val)
     if reason:
-        log += "\n<b>• Reason:</b> {}".format(reason)
+        log += "\n<b>• कारण:</b> {}".format(reason)
 
     try:
         chat.kick_member(user_id, until_date=bantime)
         keyboard = []
         bot.send_sticker(update.effective_chat.id, BAN_STICKER)  # banhammer marie sticker
-        reply = "{} has been temporarily banned for {}!".format(mention_html(member.user.id, member.user.first_name),time_val)
+        reply = "{} को निकाल दिया क्योंकि {}!".format(mention_html(member.user.id, member.user.first_name),time_val)
         message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
         return log
 
     except BadRequest as excp:
-        if excp.message == "Reply message not found":
+        if excp.message == "Reply Message Not Found":
             # Do not reply
-            message.reply_text("Banned! User will be banned for {}.".format(time_val), quote=False)
+            message.reply_text("यूजर हटा दिया क्योंकि {}.".format(time_val), quote=False)
             return log
         else:
             LOGGER.warning(update)
             LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
                              excp.message)
-            message.reply_text("Well damn, I can't ban that user.")
+            message.reply_text("मैं उसे हटा नहीं सकता")
 
     return ""
 
@@ -184,24 +184,24 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
         member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user")
+            message.reply_text("मुझे यूजर नहीं मिल रहा है")
             return ""
         else:
             raise
 
     if is_user_ban_protected(chat, user_id):
-        message.reply_text("I really wish I could kick admins...")
+        message.reply_text("कास मैं एडमिन्स को हटा सकता...")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("Yeahhh I'm not gonna do that")
+        message.reply_text("हाँ, मैं ऐसा नहीं करने जा रहा हूँ,मुझे ही निकाल रहे हो")
         return ""
 
     res = chat.unban_member(user_id)  # unban on current user = kick
     if res:
         bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
         keyboard = []
-        reply = "{} has been kicked!".format(mention_html(member.user.id, member.user.first_name))
+        reply = "{} को लात मारकर निकाल दिया!".format(mention_html(member.user.id, member.user.first_name))
         message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
 
         log = "<b>{}:</b>" \
@@ -212,12 +212,12 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
                                                       mention_html(user.id, user.first_name),
                                                       mention_html(member.user.id, member.user.first_name), user_id)
         if reason:
-            log += "\n<b>• Reason:</b> {}".format(reason)
+            log += "\n<b>• कारण:</b> {}".format(reason)
 
         return log
 
     else:
-        message.reply_text("Well damn, I can't kick that user.")
+        message.reply_text("मैं उसे हटा नहीं सकता")
 
     return ""
 
@@ -231,12 +231,12 @@ def banme(bot: Bot, update: Update):
     chat = update.effective_chat
     user = update.effective_user
     if is_user_admin(update.effective_chat, user_id):
-        update.effective_message.reply_text("I wish I could... but you're an admin.")
+        update.effective_message.reply_text("काश मैं कर सकता ... लेकिन आप एक एडमिन हैं")
         return
 
     res = update.effective_chat.kick_member(user_id)  
     if res:
-        update.effective_message.reply_text("No problem, banned.")
+        update.effective_message.reply_text("कोई बात नहीं,निकल दिया")
         log = "<b>{}:</b>" \
               "\n#BANME" \
               "\n<b>User:</b> {}" \
@@ -245,7 +245,7 @@ def banme(bot: Bot, update: Update):
         return log
     
     else:
-        update.effective_message.reply_text("Huh? I can't :/")
+        update.effective_message.reply_text("है? मैं नहीं कर सकता :/")
         
 @run_async
 @bot_admin
@@ -253,14 +253,14 @@ def banme(bot: Bot, update: Update):
 def kickme(bot: Bot, update: Update):
     user_id = update.effective_message.from_user.id
     if is_user_admin(update.effective_chat, user_id):
-        update.effective_message.reply_text("I wish I could... but you're an admin.")
+        update.effective_message.reply_text("काश मैं कर सकता ... लेकिन आप एक एडमिन हैं")
         return
 
     res = update.effective_chat.unban_member(user_id)  # unban on current user = kick
     if res:
-        update.effective_message.reply_text("No problem.")
+        update.effective_message.reply_text("कोई बात नहीं")
     else:
-        update.effective_message.reply_text("Huh? I can't :/")
+        update.effective_message.reply_text("है? मैं नहीं कर सकता :/")
 
 
 @run_async
@@ -282,21 +282,21 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
         member = chat.get_member(user_id)
     except BadRequest as excp:
         if excp.message == "User not found":
-            message.reply_text("I can't seem to find this user")
+            message.reply_text("मुझे यूजर नहीं मिल रहा है")
             return ""
         else:
             raise
 
     if user_id == bot.id:
-        message.reply_text("How would I unban myself if I wasn't here...?")
+        message.reply_text("अगर मैं यहाँ नहीं होता तो मैं खुद को कैसे हटाता ...?")
         return ""
 
     if is_user_in_chat(chat, user_id):
-        message.reply_text("Why are you trying to unban someone that's already in the chat?")
+        message.reply_text("आप किसी ऐसे व्यक्ति को अनबन करने की कोशिश कर रहे हैं जो पहले से ही चैट में है?")
         return ""
 
     chat.unban_member(user_id)
-    message.reply_text("Yep, this user can join!")
+    message.reply_text("हां, यह यूजर फिर से शामिल हो सकता है!")
 
     log = "<b>{}:</b>" \
           "\n#UNBANNED" \
@@ -306,7 +306,7 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
                                                   mention_html(user.id, user.first_name),
                                                   mention_html(member.user.id, member.user.first_name), user_id)
     if reason:
-        log += "\n<b>• Reason:</b> {}".format(reason)
+        log += "\n<b>• कारण:</b> {}".format(reason)
 
     return log
 
@@ -348,7 +348,7 @@ def sban(bot: Bot, update: Update, args: List[str]) -> str:
           "\n<b>• ID:</b> <code>{}</code>".format(html.escape(chat.title), mention_html(user.id, user.first_name), 
                                                   mention_html(member.user.id, member.user.first_name), user_id)
     if reason:
-        log += "\n<b>• Reason:</b> {}".format(reason)
+        log += "\n<b>• कारण:</b> {}".format(reason)
 
     try:
         chat.kick_member(user_id)
@@ -363,15 +363,15 @@ def sban(bot: Bot, update: Update, args: List[str]) -> str:
     return ""
 
 __help__ = """
- - /kickme: kicks the user who issued the command.
- - /banme: bans the user who issued the command.
+ - /kickme: आदेश जारी करने वाले यूजर को हट ता है.
+ - /banme: आदेश जारी करने वाले यूजर को निकालता है..
 
 *Admin only:*
- - /ban <userhandle>: bans a user. (via handle, or reply)
- - /sban <userhandle>: silently bans a user. (via handle, or reply)
- - /tban <userhandle> x(m/h/d): bans a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
+ - /ban <userhandle>: यूजर को ग्रुप से निकालता है
+ - /sban <userhandle>: चुप चाप ग्रुप से निकालता है
+ - /tban <userhandle> x(m/h/d):  यूजर को ग्रुप से निकालता है समय x के लिए  m = मिनट, h = घंटों, d = दिन.
  - /unban <userhandle>: unbans a user. (via handle, or reply)
- - /kick <userhandle>: kicks a user, (via handle, or reply)
+ - /kick <userhandle>: यूजर को हट ता है.)
 """
 
 __mod_name__ = "Bans"
