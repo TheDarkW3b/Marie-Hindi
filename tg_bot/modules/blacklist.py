@@ -37,7 +37,7 @@ def blacklist(bot: Bot, update: Update, args: List[str]):
     split_text = split_message(filter_list)
     for text in split_text:
         if text == BASE_BLACKLIST_STRING:
-            msg.reply_text("There are no blacklisted messages here!")
+            msg.reply_text"यहां कोई ब्लैक लिस्टेड मैसेज नहीं हैं!")
             return
         msg.reply_text(text, parse_mode=ParseMode.HTML)
 
@@ -55,15 +55,15 @@ def add_blacklist(bot: Bot, update: Update):
             sql.add_to_blacklist(chat.id, trigger.lower())
 
         if len(to_blacklist) == 1:
-            msg.reply_text("Added <code>{}</code> to the blacklist!".format(html.escape(to_blacklist[0])),
+            msg.reply_text("एडेड <code>{}</code> तू ब्लैकलिस्ट!".format(html.escape(to_blacklist[0])),
                            parse_mode=ParseMode.HTML)
 
         else:
             msg.reply_text(
-                "Added <code>{}</code> triggers to the blacklist.".format(len(to_blacklist)), parse_mode=ParseMode.HTML)
+                "एडेड <code>{}</code> ट्रिगर तू ब्लैकलिस्ट.".format(len(to_blacklist)), parse_mode=ParseMode.HTML)
 
     else:
-        msg.reply_text("Tell me which words you would like to remove from the blacklist.")
+        msg.reply_text("मुझे बताओ कि आप किन शब्दों को ब्लैकलिस्ट से निकालना चाहेंगे।")
 
 
 @run_async
@@ -83,28 +83,28 @@ def unblacklist(bot: Bot, update: Update):
 
         if len(to_unblacklist) == 1:
             if successful:
-                msg.reply_text("Removed <code>{}</code> from the blacklist!".format(html.escape(to_unblacklist[0])),
+                msg.reply_text("हटा दिया <code>{}</code> ब्लैकलिस्ट से!".format(html.escape(to_unblacklist[0])),
                                parse_mode=ParseMode.HTML)
             else:
-                msg.reply_text("This isn't a blacklisted trigger...!")
+                msg.reply_text("यह एक ब्लैक लिस्टेड ट्रिगर नहीं है ...!")
 
         elif successful == len(to_unblacklist):
             msg.reply_text(
-                "Removed <code>{}</code> triggers from the blacklist.".format(
+                "हटा दिया <code>{}</code> ब्लैकलिस्ट से".format(
                     successful), parse_mode=ParseMode.HTML)
 
         elif not successful:
             msg.reply_text(
-                "None of these triggers exist, so they weren't removed.".format(
+                "इनमें से कोई भी ट्रिगर मौजूद नहीं है, इसलिए उन्हें हटाया नहीं गया था।".format(
                     successful, len(to_unblacklist) - successful), parse_mode=ParseMode.HTML)
 
         else:
             msg.reply_text(
-                "Removed <code>{}</code> triggers from the blacklist. {} did not exist, "
-                "so were not removed.".format(successful, len(to_unblacklist) - successful),
+                "हटा दिया <code>{}</code> {} ब्लैकलिस्ट से मौजूद नहीं था, "
+                "इसलिए हटाया नहीं गया.".format(successful, len(to_unblacklist) - successful),
                 parse_mode=ParseMode.HTML)
     else:
-        msg.reply_text("Tell me which words you would like to remove from the blacklist.")
+        msg.reply_text("मुझे बताओ कि आप किन शब्दों को ब्लैकलिस्ट से निकालना चाहेंगे।")
 
 
 @run_async
@@ -147,19 +147,18 @@ def __stats__():
 __mod_name__ = "Word Blacklists"
 
 __help__ = """
-Blacklists are used to stop certain triggers from being said in a group. Any time the trigger is mentioned, \
-the message will immediately be deleted. A good combo is sometimes to pair this up with warn filters!
+ब्लैकलिस्ट का उपयोग कुछ ट्रिगर्स को एक समूह में कहा जाने से रोकने के लिए किया जाता है। किसी भी समय ट्रिगर का उल्लेख है, \ 
+संदेश जाएगा
 
 *NOTE:* blacklists do not affect group admins.
 
- - /blacklist: View the current blacklisted words.
+ - /blacklist: वर्तमान ब्लैक लिस्टेड शब्दों को देखें.
 
 *Admin only:*
- - /addblacklist <triggers>: Add a trigger to the blacklist. Each line is considered one trigger, so using different \
-lines will allow you to add multiple triggers.
- - /unblacklist <triggers>: Remove triggers from the blacklist. Same newline logic applies here, so you can remove \
-multiple triggers at once.
- - /rmblacklist <triggers>: Same as above.
+ - /addblacklist <triggers>: ब्लैकलिस्ट में ट्रिगर जोड़ें। प्रत्येक पंक्ति को एक ट्रिगर माना जाता है, इसलिए विभिन्न \ 
+ का उपयोग करके लाइनें आपको कई ट्रिगर्स जोड़ने की अनुमति.
+ - /unblacklist <triggers>: ट्रिगर को ब्लैकलिस्ट से निकालें। एक ही नया तर्क यहाँ लागू होता है, ताकि आप हटा सकें एक साथ कई ट्रिगर।
+ - /rmblacklist <triggers>: ऊपर की तरह.
 """
 
 BLACKLIST_HANDLER = DisableAbleCommandHandler("blacklist", blacklist, filters=Filters.group, pass_args=True,
