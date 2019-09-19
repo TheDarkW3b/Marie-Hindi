@@ -46,7 +46,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     if user_id == bot.id:
-        message.reply_text("मैं खुद को हटाने वाला नहीं हूं, आप पागल हैं)
+        message.reply_text("मैं खुद को हटाने वाला नहीं हूं, आप पागल हैं")
         return ""
 
     log = "<b>{}:</b>" \
