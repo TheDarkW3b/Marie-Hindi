@@ -38,7 +38,7 @@ def quickunban(bot: Bot, update: Update, args: List[int]):
         update.effective_message.reply_text("आप किसी यूजर को टैग नहीं कर रहे हैं")
     try:
         bot.unban_chat_member(chat_id, to_kick)
-        update.effective_message.reply_text(+ to_kick + " को" + chat_id "से निकाल दिया गया)
+        update.effective_message.reply_text("Attempted unbanning " + to_kick + " from" + chat_id)
     except BadRequest as excp:
         update.effective_message.reply_text(excp.message + " " + to_kick)
 
