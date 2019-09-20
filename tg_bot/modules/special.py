@@ -21,10 +21,10 @@ def quickscope(bot: Bot, update: Update, args: List[int]):
         chat_id = str(args[1])
         to_kick = str(args[0])
     else:
-        update.effective_message.reply_text("You don't seem to be referring to a chat/user")
+        update.effective_message.reply_text("आप किसी यूजर को टैग नहीं कर रहे हैं")
     try:
         bot.kick_chat_member(chat_id, to_kick)
-        update.effective_message.reply_text("Attempted banning " + to_kick + " from" + chat_id)
+        update.effective_message.reply_text( + to_kick + " को" + chat_id "से निकाल दिया गया")
     except BadRequest as excp:
         update.effective_message.reply_text(excp.message + " " + to_kick)
 
@@ -35,10 +35,10 @@ def quickunban(bot: Bot, update: Update, args: List[int]):
         chat_id = str(args[1])
         to_kick = str(args[0])
     else:
-        update.effective_message.reply_text("You don't seem to be referring to a chat/user")
+        update.effective_message.reply_text("आप किसी यूजर को टैग नहीं कर रहे हैं")
     try:
         bot.unban_chat_member(chat_id, to_kick)
-        update.effective_message.reply_text("Attempted unbanning " + to_kick + " from" + chat_id)
+        update.effective_message.reply_text(+ to_kick + " को" + chat_id "से निकाल दिया गया)
     except BadRequest as excp:
         update.effective_message.reply_text(excp.message + " " + to_kick)
 
@@ -54,7 +54,7 @@ def banall(bot: Bot, update: Update, args: List[int]):
     for mems in all_mems:
         try:
             bot.kick_chat_member(chat_id, mems.user)
-            update.effective_message.reply_text("Tried banning " + str(mems.user))
+            update.effective_message.reply_text(+ str(mems.user) "को हटाने की कोशिश की")
             sleep(0.1)
         except BadRequest as excp:
             update.effective_message.reply_text(excp.message + " " + str(mems.user))
@@ -67,14 +67,14 @@ def snipe(bot: Bot, update: Update, args: List[str]):
         chat_id = str(args[0])
         del args[0]
     except TypeError as excp:
-        update.effective_message.reply_text("Please give me a chat to echo to!")
+        update.effective_message.reply_text("कृपया मुझे इको करने के लिए एक चैट दें")
     to_send = " ".join(args)
     if len(to_send) >= 2:
         try:
             bot.sendMessage(int(chat_id), str(to_send))
         except TelegramError:
             LOGGER.warning("Couldn't send to group %s", str(chat_id))
-            update.effective_message.reply_text("Couldn't send the message. Perhaps I'm not part of that group?")
+            update.effective_message.reply_text("मैसेज नहीं भेज सका। शायद मैं उस ग्रुप का हिस्सा नहीं हूं?")
 
 
 @run_async
@@ -83,14 +83,14 @@ def getlink(bot: Bot, update: Update, args: List[int]):
     if args:
         chat_id = int(args[0])
     else:
-        update.effective_message.reply_text("You don't seem to be referring to a chat")
+        update.effective_message.reply_text("आप किसी यूजर को टैग नहीं कर रहे हैं")
     chat = bot.getChat(chat_id)
     bot_member = chat.get_member(bot.id)
     if bot_member.can_invite_users:
         invitelink = bot.get_chat(chat_id).invite_link
         update.effective_message.reply_text(invitelink)
     else:
-        update.effective_message.reply_text("I don't have access to the invite link!")
+        update.effective_message.reply_text("मुझे इन्विते लिंक तक पहुंच नहीं है!")
 
 
 @bot_admin
@@ -99,23 +99,23 @@ def leavechat(bot: Bot, update: Update, args: List[int]):
         chat_id = int(args[0])
         bot.leaveChat(chat_id)
     else:
-        update.effective_message.reply_text("You don't seem to be referring to a chat")
+        update.effective_message.reply_text("आप किसी यूजर को टैग नहीं कर रहे हैं")
 
 __help__ = """
 **Owner only:**
-- /getlink **chatid**: Get the invite link for a specific chat.
-- /banall: Ban all members from a chat
-- /leavechat **chatid** : leave a chat
+- /getlink **chatid**: इन्विते लिंक जानने के लिए
+- /banall: सभी सदस्यों को चैट से निकालें
+- /leavechat **chatid** : ग्रुप छोड़ो
 **Sudo/owner only:**
-- /quickscope **userid** **chatid**: Ban user from chat.
-- /quickunban **userid** **chatid**: Unban user from chat.
-- /snipe **chatid** **string**: Make me send a message to a specific chat.
-- /rban **userid** **chatid** remotely ban a user from a chat
-- /runban **userid** **chatid** remotely unban a user from a chat
-- /Stats: check bot's stats
-- /chatlist: get chatlist
-- /gbanlist: get gbanned users list
-- /gmutelist: get gmuted users list
+- /quickscope **userid** **chatid**: यूजर उपयोगकर्ता चैट से प्रतिबंध.
+- /quickunban **userid** **chatid**: प्रतिबंध हटाए.
+- /snipe **chatid** **string**: मुझे एक विशिष्ट चैट के लिए एक संदेश भेजें.
+- /rban **userid** **chatid** दूर से एक यूजर चैट से हटा दें
+- /runban **userid** **chatid** प्रतिबंध हटाए.
+- /Stats: बॉट की स्थिति की जाँच करें
+- /chatlist: चैटलिस्ट प्राप्त करें
+- /gbanlist: gbanned यूजर सूची प्राप्त करें
+- /gmutelist: gmuted यूजर सूची प्राप्त करें
 - Chat bans via /restrict chat_id and /unrestrict chat_id commands
 **Support user:**
 - /Gban : Global ban a user
