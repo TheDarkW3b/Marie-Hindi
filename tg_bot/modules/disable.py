@@ -75,13 +75,13 @@ if is_module_loaded(FILENAME):
 
             if disable_cmd in set(DISABLE_CMDS + DISABLE_OTHER):
                 sql.disable_command(chat.id, disable_cmd)
-                update.effective_message.reply_text("Disabled the use of `{}`".format(disable_cmd),
+                update.effective_message.reply_text(" `{}`का उपयोग हटा दिया".format(disable_cmd),
                                                     parse_mode=ParseMode.MARKDOWN)
             else:
-                update.effective_message.reply_text("That command can't be disabled")
+                update.effective_message.reply_text("उस आदेश को डिसएबल नहीं किया जा सकता है")
 
         else:
-            update.effective_message.reply_text("What should I disable?")
+            update.effective_message.reply_text("मुझे क्या डिसएबल करना चाहिए?")
 
 
     @run_async
@@ -94,13 +94,13 @@ if is_module_loaded(FILENAME):
                 enable_cmd = enable_cmd[1:]
 
             if sql.enable_command(chat.id, enable_cmd):
-                update.effective_message.reply_text("Enabled the use of `{}`".format(enable_cmd),
+                update.effective_message.reply_text(" `{}`के उपयोग को सक्षम किया".format(enable_cmd),
                                                     parse_mode=ParseMode.MARKDOWN)
             else:
-                update.effective_message.reply_text("Is that even disabled?")
+                update.effective_message.reply_text("क्या वह भी डिसएबल है?")
 
         else:
-            update.effective_message.reply_text("What should I enable?")
+            update.effective_message.reply_text("मुझे क्या इनेबल करना चाहिए?")
 
 
     @run_async
@@ -110,22 +110,22 @@ if is_module_loaded(FILENAME):
             result = ""
             for cmd in set(DISABLE_CMDS + DISABLE_OTHER):
                 result += " - `{}`\n".format(escape_markdown(cmd))
-            update.effective_message.reply_text("The following commands are toggleable:\n{}".format(result),
+            update.effective_message.reply_text("निम्नलिखित कमांड टॉगल करने योग्य हैं:\n {} " are toggleable:\n{}".format(result),
                                                 parse_mode=ParseMode.MARKDOWN)
         else:
-            update.effective_message.reply_text("No commands can be disabled.")
+            update.effective_message.reply_text("कोई भी आदेश डिसएबल नहीं किया जा सकता है।")
 
 
     # do not async
     def build_curr_disabled(chat_id: Union[str, int]) -> str:
         disabled = sql.get_all_disabled(chat_id)
         if not disabled:
-            return "No commands are disabled!"
+            return "कोई भी आदेश डिसएबल नहीं किया जा सकता है!"
 
         result = ""
         for cmd in disabled:
             result += " - `{}`\n".format(escape_markdown(cmd))
-        return "The following commands are currently restricted:\n{}".format(result)
+        return "वर्तमान में निम्न आदेश प्रतिबंधित हैं:\n{}".format(result)
 
 
     @run_async
@@ -149,18 +149,17 @@ if is_module_loaded(FILENAME):
     __mod_name__ = "Command disabling"
 
     __help__ = """
- - /cmds: check the current status of disabled commands
+ - /cmds:अक्षम कमांड की वर्तमान स्थिति की जाँच करें
 
 *Admin only:*
- - /enable <cmd name>: enable that command
- - /disable <cmd name>: disable that command
- - /listcmds: list all possible toggleable commands
+ - /enable <cmd name>: उस आदेश को सक्षम करें  - <अक्षम करें
+ - <cmd name>: उस कमांड को अक्षम करें  - / listcmds: सभी संभव टॉगल कमांड को सूचीबद्ध करें     "" "
     """
 
     DISABLE_HANDLER = CommandHandler("disable", disable, pass_args=True, filters=Filters.group)
     ENABLE_HANDLER = CommandHandler("enable", enable, pass_args=True, filters=Filters.group)
     COMMANDS_HANDLER = CommandHandler(["cmds", "disabled"], commands, filters=Filters.group)
-    TOGGLE_HANDLER = CommandHandler("listcmds", list_cmds, filters=Filters.group)
+    TOGGLE_HANDLER = CommandHandler("listcmds"the list_cmds, filters=Filters.group)
 
     dispatcher.add_handler(DISABLE_HANDLER)
     dispatcher.add_handler(ENABLE_HANDLER)
