@@ -31,8 +31,8 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
                     bot.deleteMessage(chat.id, m_id)
                 except BadRequest as err:
                     if err.message == "Message can't be deleted":
-                        bot.send_message(chat.id, "Cannot delete all messages. The messages may be too old, I might "
-                                                  "not have delete rights, or this might not be a supergroup.")
+                        bot.send_message(chat.id, "सभी संदेश नहीं हटा सकते। संदेश बहुत पुराने हो सकते हैं,"
+                                                  "या यह एक सुपरग्रुप नहीं हो सकता है। [Check Delete Rights]")
 
                     elif err.message != "Message to delete not found":
                         LOGGER.exception("Error while purging chat messages.")
@@ -55,7 +55,7 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
                                                                delete_to - message_id)
 
     else:
-        msg.reply_text("Reply to a message to select where to start purging from.")
+        msg.reply_text("एक मैसेज का जवाब दें जहां से purge करना शुरू करें ")
 
     return ""
 
@@ -76,16 +76,16 @@ def del_message(bot: Bot, update: Update) -> str:
                    "\nMessage deleted.".format(html.escape(chat.title),
                                                mention_html(user.id, user.first_name))
     else:
-        update.effective_message.reply_text("Whadya want to delete?")
+        update.effective_message.reply_text("क्या हटाना चाहते हैं?")
 
     return ""
 
 
 __help__ = """
 *Admin only:*
- - /del: deletes the message you replied to
- - /purge: deletes all messages between this and the replied to message.
- - /purge <integer X>: deletes the replied message, and X messages following it.
+ - /del: आपके द्वारा दिए गए मैसेज को हटा देता है
+ - /purge: इस और मैसेज के उत्तर के बीच सभी मैसेज को हटाता है।
+ - /purge <integer X>: हटाए गए मैसेज और X मैसेज का अनुसरण करता है
 """
 
 __mod_name__ = "Purges"
