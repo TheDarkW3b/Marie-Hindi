@@ -110,7 +110,7 @@ if is_module_loaded(FILENAME):
             result = ""
             for cmd in set(DISABLE_CMDS + DISABLE_OTHER):
                 result += " - `{}`\n".format(escape_markdown(cmd))
-            update.effective_message.reply_text("निम्नलिखित कमांड टॉगल करने योग्य हैं '{}'".format(result),
+            update.effective_message.reply_text("निम्नलिखित कमांड टॉगल करने योग्य हैं '{}'".format(enable_cmd),
                                                 parse_mode=ParseMode.MARKDOWN)
         else:
             update.effective_message.reply_text("कोई भी आदेश डिसएबल नहीं किया जा सकता है।")
