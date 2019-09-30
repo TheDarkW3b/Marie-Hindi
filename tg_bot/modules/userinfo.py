@@ -31,7 +31,7 @@ def about_me(bot: Bot, update: Update, args: List[str]):
         username = message.reply_to_message.from_user.first_name
         update.effective_message.reply_text(username + "Information about him is currently unavailable !")
     else:
-        update.effective_message.reply_text("You have not added any information about yourself yet !")
+        update.effective_message.reply_text("आपने अभी तक अपने बारे में कोई जानकारी नहीं जोड़ी है !")
 
 
 @run_async
@@ -43,7 +43,7 @@ def set_about_me(bot: Bot, update: Update):
     if len(info) == 2:
         if len(info[1]) < MAX_MESSAGE_LENGTH // 4:
             sql.set_user_me_info(user_id, info[1])
-            message.reply_text("Your information has been recorded successfully")
+            message.reply_text("आपकी जानकारी सेव की गई है")
         else:
             message.reply_text(
                 " About You{} To be confined to letters ".format(MAX_MESSAGE_LENGTH // 4, len(info[1])))
@@ -66,9 +66,9 @@ def about_bio(bot: Bot, update: Update, args: List[str]):
                                             parse_mode=ParseMode.MARKDOWN)
     elif message.reply_to_message:
         username = user.first_name
-        update.effective_message.reply_text("{} No details about him have been added yet !".format(username))
+        update.effective_message.reply_text("{} के बारे में कुछ भी नहीं जोड़ा गया है !".format(username))
     else:
-        update.effective_message.reply_text(" Your information about you has been added !")
+        update.effective_message.reply_text(" आपके बारे में आपकी जानकारी जोड़ दी गई है !")
 
 
 @run_async
