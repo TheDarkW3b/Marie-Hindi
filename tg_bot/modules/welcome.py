@@ -228,11 +228,11 @@ def welcome(bot: Bot, update: Update, args: List[str]):
     elif len(args) >= 1:
         if args[0].lower() in ("on", "yes"):
             sql.set_welc_preference(str(chat.id), True)
-            update.effective_message.reply_text("I'll be polite!")
+            update.effective_message.reply_text("मैं विनम्र बनूंगा!”)
 
         elif args[0].lower() in ("off", "no"):
             sql.set_welc_preference(str(chat.id), False)
-            update.effective_message.reply_text("I'm sulking, not saying hello anymore.")
+            update.effective_message.reply_text("अब मैं चुप रहूंगा.")
 
         else:
             # idek what you're writing, say yes or no
@@ -338,7 +338,7 @@ def set_goodbye(bot: Bot, update: Update) -> str:
         return ""
 
     sql.set_custom_gdbye(chat.id, content or text, data_type, buttons)
-    msg.reply_text("Successfully set custom goodbye message!")
+    msg.reply_text("सफलतापूर्वक कस्टम गुडबाय संदेश सेट!")
     return "<b>{}:</b>" \
            "\n#SET_GOODBYE" \
            "\n<b>Admin:</b> {}" \
@@ -353,7 +353,7 @@ def reset_goodbye(bot: Bot, update: Update) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
     sql.set_custom_gdbye(chat.id, sql.DEFAULT_GOODBYE, sql.Types.TEXT)
-    update.effective_message.reply_text("Successfully reset goodbye message to default!")
+    update.effective_message.reply_text("डिफ़ॉल्ट रूप से goodbye मैसेज को सफलतापूर्वक रीसेट !")
     return "<b>{}:</b>" \
            "\n#RESET_GOODBYE" \
            "\n<b>Admin:</b> {}" \
@@ -371,14 +371,14 @@ def clean_welcome(bot: Bot, update: Update, args: List[str]) -> str:
     if not args:
         clean_pref = sql.get_clean_pref(chat.id)
         if clean_pref:
-            update.effective_message.reply_text("I should be deleting welcome messages up to two days old.")
+            update.effective_message.reply_text("मुझे दो दिन पुराने welcome मैसेज को हटाना चाहिए। ")
         else:
-            update.effective_message.reply_text("I'm currently not deleting old welcome messages!")
+            update.effective_message.reply_text("मैं वर्तमान में पुराने welcome मैसेज को नहीं हटा रहा हूँ!")
         return ""
 
     if args[0].lower() in ("on", "yes"):
         sql.set_clean_welcome(str(chat.id), True)
-        update.effective_message.reply_text("OK, So try to delete the old welcome message")
+        update.effective_message.reply_text("ठीक है, इसलिए पुराने स्वागत संदेश को हटाने का प्रयास करें")
         return "<b>{}:</b>" \
                "\n#CLEAN_WELCOME" \
                "\n<b>Admin:</b> {}" \
@@ -394,7 +394,7 @@ def clean_welcome(bot: Bot, update: Update, args: List[str]) -> str:
                                                                           mention_html(user.id, user.first_name))
     else:
         # idek what you're writing, say yes or no
-        update.effective_message.reply_text("I understand 'on/yes' or 'off/no' only!")
+        update.effective_message.reply_text("मैं 'on/of या 'yes/no' ही समझता हूं!")
         return ""
 
 
@@ -456,17 +456,17 @@ __help__ = """
 {}
 
 *Admin only:*
- - /welcome <on/off>: enable/disable welcome messages.
- - /welcome: shows current welcome settings.
- - /welcome noformat: shows current welcome settings, without the formatting - useful to recycle your welcome messages!
- - /goodbye -> same usage and args as /welcome.
- - /setwelcome <sometext>: set a custom welcome message. If used replying to media, uses that media.
- - /setgoodbye <sometext>: set a custom goodbye message. If used replying to media, uses that media.
- - /resetwelcome: reset to the default welcome message.
- - /resetgoodbye: reset to the default goodbye message.
- - /cleanwelcome <on/off>: On new member, try to delete the previous welcome message to avoid spamming the chat.
+ - /welcome <on/off>: स्वागत संदेशों को enable/disable करें।
+ - /welcome: वर्तमान welcome सेटिंग्स दिखाता है.
+ - /welcome noformat: वर्तमान welcome सेटिंग्स दिखाता है, स्वरूपण के बिना - अपने स्वागत संदेशों को रीसायकल करने के लिए उपयोगी है !
+ - /goodbye -> same  as /welcome.
+ - /setwelcome <sometext>: एक कस्टम welcome मैसेज सेट करें। यदि मीडिया को रिप्लाई किया जाता है, तो वह मीडिया का उपयोग करता है.
+ - /setgoodbye <sometext>: एक कस्टम goodbye मैसेज सेट करें। यदि मीडिया को रिप्लाई किया जाता है, तो वह मीडिया का उपयोग करता है
+ - /resetwelcome: डिफ़ॉल्ट welcome संदेश पर रीसेट करें.
+ - /resetgoodbye: डिफ़ॉल्ट goodbye संदेश को रीसेट करें.
+ - /cleanwelcome <on/off>: नए सदस्य पर, चैट को स्पैम करने से बचने के लिए पिछले welcome मैसेज को हटाने का प्रयास करें।
 
- - /welcomehelp: view more formatting information for custom welcome/goodbye messages.
+ - /welcomehelp: कस्टम welcome/goodbye मैसेज के लिए अधिक प्रारूपण जानकारी देखें
 """.format(WELC_HELP_TXT)
 
 __mod_name__ = "Welcomes/Goodbyes"
