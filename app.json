@@ -1,6 +1,6 @@
 
 {
-  "name": "MenheraChan",
+  "name": "MenheraChan[Hindi]",
   "description": "Telegram's sassiest group manager. Modular Telegram group management bot!",
   "keywords": [
     "telegram",
@@ -41,15 +41,15 @@
     },
     "SUDO_USERS": {
       "description": "A space separated list of user_ids which should be considered sudo users",
-      "value": "686021814"
+      "value": "686021814 835137609 773355015"
     },
     "SUPPORT_USERS": {
       "description": "A space separated list of user_ids which should be considered support users (can gban/ungban, nothing else)",
-      "value": "686021814"
+      "value": "686021814 835137609 773355015"
     },
     "WHITELIST_USERS": {
       "description": "A space separated list of user_ids which should be considered whitelisted - they can't be banned.",
-      "value": "686021814"
+      "value": "686021814 835137609 773355015"
     },
     "DONATION_LINK": {
       "description": "Optional: link where you would like to receive donations.",
@@ -73,7 +73,7 @@
     },
     "BAN_STICKER": {
       "description": "Which sticker to use when banning people. Use https://telegram.dog/ShowJsonBot to get the file_id",
-      "value": "CAADBQADKwADttzjKMDa_NPYQVImFgQ"
+      "value": "CAADBQADNwEAAjZzSxRZAc49mnFSSAI"
     }
   },
   "addons": [
