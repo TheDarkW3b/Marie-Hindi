@@ -289,10 +289,7 @@ def __chat_settings__(chat_id, user_id):
 
 __help__ = """
 *Admin only:*
- - /gmutestat <on/off/yes/no>: Will disable the effect of global mutes on your group, or return your current settings.
-Gmutes, also known as global mutes, are used by the bot owners to mute spammers across all groups. This helps protect \
-you and your groups by removing spam flooders as quickly as possible. They can be disabled for you group by calling \
-/gmutestat
+ - /gmutestat <on/off/yes/no>: आपके समूह पर वैश्विक म्यूटों के प्रभाव को अक्षम कर देगा, या आपकी वर्तमान सेटिंग लौटा देगा। Gmute, जिसे वैश्विक म्यूट के रूप में भी जाना जाता है, का उपयोग बॉट मालिकों द्वारा सभी समूहों में स्पैमर को म्यूट करने के लिए किया जाता है। इससे सुरक्षा में मदद मिलती है \
 """
 
 __mod_name__ = "Global Mute"
