@@ -18,15 +18,15 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-नमस्ते {}, मेरा नाम {} है! मैं यहां आपके ग्रूप को मैनज करने में आपकी सहायता करने के लिए हूं!.किसी भी मदद की ज़रूरत है हमारे सहायता ग्रूप में शामिल हों (@MenheraChanSupport) 
+नमस्ते {}, मेरा नाम {} है! मैं यहां आपके ग्रूप को मैनज करने में आपकी सहायता करने के लिए हूं!.अगर आपके पास मुझे इस्तेमाल करने का कोई प्रश्न है तो /help पर क्लिक करे
 
-मैं ग्रुप मैनेजर बॉट हूं,मेरे [भगवान](tg://user?id={}) ये है,मुझे python3 में बनाया गया है,python-telegram-bot library का उपयोग करके
+मैं ग्रुप मैनेजर बॉट हूं,मेरे [भगवान](tg://user?id={}) ये है,मेरे भविष्य के अपडेट इस चैनल में डाले जाएंगे - @MarieChechi & और मेरा सपोर्ट ग्रुप @InFoTelGroup
 
-/help से कमांड का पता लगाये
+यह मेरा [डिप्लॉय कोड है](https://heroku.com/deploy?template=https://github.com/TheDarkW3b/Marie-Hindi), आप मेरी तरह ही क्लोन बना सकते हैं।
 
-यदि आप मुझे इस्तेमाल करने का आनंद ले रहे हैं, और मुझे जीवित रहने में मदद करना चाहते हैं, फिर हमें कुछ दान करें /donate पर क्लिक करके
+अधिक कमांड के लिए /help पर क्लिक करें ...
 
-[मुझे अपने ग्रूप में जोड़ने के लिए यहां क्लिक करें](https://telegram.me/HindiMarie_bot?startgroup=add)
+Keep in mind that any changes you DO do to the source have to be on github, as per the license.
 """ 
 
 HELP_STRINGS = """
