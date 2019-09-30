@@ -24,11 +24,11 @@ def report_setting(bot: Bot, update: Update, args: List[str]):
         if len(args) >= 1:
             if args[0] in ("yes", "on"):
                 sql.set_user_setting(chat.id, True)
-                msg.reply_text("Turned on reporting! You'll be notified whenever anyone reports something.")
+                msg.reply_text("रिपोर्टिंग चालू की! जब भी किसी को कुछ रिपोर्ट करेंगे तो आपको सूचित किया जाएगा।.")
 
             elif args[0] in ("no", "off"):
                 sql.set_user_setting(chat.id, False)
-                msg.reply_text("Turned off reporting! You wont get any reports.")
+                msg.reply_text("रिपोर्टिंग is off! जब भी किसी को कुछ रिपोर्ट करेंगे तो आपको सूचित nahi किया जाएगा।")
         else:
             msg.reply_text("Your current report preference is: `{}`".format(sql.user_should_report(chat.id)),
                            parse_mode=ParseMode.MARKDOWN)
@@ -123,14 +123,14 @@ def __user_settings__(user_id):
 __mod_name__ = "Reporting"
 
 __help__ = """
- - /report <reason>: reply to a message to report it to admins.
- - @admin: reply to a message to report it to admins.
-NOTE: neither of these will get triggered if used by admins
+ - /report <reason>: एक मैसेज के जवाब में इसे रिपोर्ट करने के लिए.
+ - @admin: Same as /report.
+NOTE: यदि इनमें से कोई भी एडमिन द्वारा उपयोग किया जाता है तो ट्रिगर नहीं होगा
 
-*Admin only:*
- - /reports <on/off>: change report setting, or view current status.
-   - If done in pm, toggles your status.
-   - If in chat, toggles that chat's status.
+*केवल एडमिन:*
+ - /reports <on/off>: रिपोर्ट सेटिंग बदलें, या वर्तमान स्थिति देखें।    
+ - यदि दोपहर में किया जाता है, तो अपनी स्थिति को बढ़ा देता है।   
+ - अगर चैट में है, तो चैट के स्टेटस को टॉगल करें।.
 """
 
 REPORT_HANDLER = CommandHandler("report", report, filters=Filters.group)
