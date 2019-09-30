@@ -27,13 +27,13 @@ CURRENT_WARNING_FILTER_STRING = "<b>Current warning filters in this chat:</b>\n"
 # Not async
 def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = None) -> str:
     if is_user_admin(chat, user.id):
-        message.reply_text("Damn admins, can't even be warned!")
+        message.reply_text("[एडमिन] चेतावनी भी नहीं दी जा सकती है! even be warned!")
         return ""
 
     if warner:
         warner_tag = mention_html(warner.id, warner.first_name)
     else:
-        warner_tag = "Automated warn filter."
+        warner_tag = "स्वचालित चेतावनी फ़िल्टर."
 
     limit, soft_warn = sql.get_warn_setting(chat.id)
     num_warns, reasons = sql.warn_user(user.id, chat.id, reason)
@@ -41,11 +41,11 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
         sql.reset_warns(user.id, chat.id)
         if soft_warn:  # kick
             chat.unban_member(user.id)
-            reply = "{} warnings, {} has been kicked!".format(limit, mention_html(user.id, user.first_name))
+            reply = "{} चेतावनी, {} निकाल दिया गया है!".format(limit, mention_html(user.id, user.first_name))
 
         else:  # ban
             chat.kick_member(user.id)
-            reply = "{} warnings, {} has been banned!".format(limit, mention_html(user.id, user.first_name))
+            reply = "{} चेतावनी, {} निकाल दिया गया है!".format(limit, mention_html(user.id, user.first_name))
 
         for warn_reason in reasons:
             reply += "\n - {}".format(html.escape(warn_reason))
@@ -66,10 +66,10 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
         keyboard = InlineKeyboardMarkup(
             [[InlineKeyboardButton("Remove warn", callback_data="rm_warn({})".format(user.id))]])
 
-        reply = "{} has {}/{} warnings... watch out!".format(mention_html(user.id, user.first_name), num_warns,
+        reply = "{} के पास {}/{} चेतावनी... ध्यान रहे!".format(mention_html(user.id, user.first_name), num_warns,
                                                              limit)
         if reason:
-            reply += "\nReason for last warn:\n{}".format(html.escape(reason))
+            reply += "\nअंतिम चेतावनी का कारण:\n{}".format(html.escape(reason))
 
         log_reason = "<b>{}:</b>" \
                      "\n#WARN" \
@@ -84,7 +84,7 @@ def warn(user: User, chat: Chat, reason: str, message: Message, warner: User = N
     try:
         message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML)
     except BadRequest as excp:
-        if excp.message == "Reply message not found":
+        if excp.message == "उत्तर मैसेज नहीं मिला":
             # Do not reply
             message.reply_text(reply, reply_markup=keyboard, parse_mode=ParseMode.HTML, quote=False)
         else:
@@ -106,7 +106,7 @@ def button(bot: Bot, update: Update) -> str:
         res = sql.remove_warn(user_id, chat.id)
         if res:
             update.effective_message.edit_text(
-                "Warn removed by {}.".format(mention_html(user.id, user.first_name)),
+                "{} द्वारा हटा दिया गया".format(mention_html(user.id, user.first_name)),
                 parse_mode=ParseMode.HTML)
             user_member = chat.get_member(user_id)
             return "<b>{}:</b>" \
@@ -117,7 +117,7 @@ def button(bot: Bot, update: Update) -> str:
                                               mention_html(user_member.user.id, user_member.user.first_name))
         else:
             update.effective_message.edit_text(
-                "User has already has no warns.".format(mention_html(user.id, user.first_name)),
+                "यूजर के पास पहले से कोई चेतावनी नहीं है".format(mention_html(user.id, user.first_name)),
                 parse_mode=ParseMode.HTML)
 
     return ""
@@ -140,7 +140,7 @@ def warn_user(bot: Bot, update: Update, args: List[str]) -> str:
         else:
             return warn(chat.get_member(user_id).user, chat, reason, message, warner)
     else:
-        message.reply_text("No user was designated!")
+        message.reply_text("किसी भी यूजर को टैग करें!")
     return ""
 
 
@@ -157,7 +157,7 @@ def reset_warns(bot: Bot, update: Update, args: List[str]) -> str:
 
     if user_id:
         sql.reset_warns(user_id, chat.id)
-        message.reply_text("Warnings have been reset!")
+        message.reply_text("चेतावनी रीसेट कर दी गई हैं!")
         warned = chat.get_member(user_id).user
         return "<b>{}:</b>" \
                "\n#RESETWARNS" \
@@ -166,7 +166,7 @@ def reset_warns(bot: Bot, update: Update, args: List[str]) -> str:
                                           mention_html(user.id, user.first_name),
                                           mention_html(warned.id, warned.first_name))
     else:
-        message.reply_text("No user has been designated!")
+        message.reply_text("किसी भी यूजर को टैग करें!")
     return ""
 
 
@@ -182,7 +182,7 @@ def warns(bot: Bot, update: Update, args: List[str]):
         limit, soft_warn = sql.get_warn_setting(chat.id)
 
         if reasons:
-            text = "This user has {}/{} warnings, for the following reasons:".format(num_warns, limit)
+            text = "यह यूजर के पास है {}/{} चेतावनी, निम्नलिखित कारणों के लिए:".format(num_warns, limit)
             for reason in reasons:
                 text += "\n - {}".format(reason)
 
@@ -191,9 +191,9 @@ def warns(bot: Bot, update: Update, args: List[str]):
                 update.effective_message.reply_text(msg)
         else:
             update.effective_message.reply_text(
-                "User has {}/{} warnings, but no reasons for any of them.".format(num_warns, limit))
+                "यह यूजर के पास है {}/{} चेतावनी, लेकिन उनमें से किसी के लिए कोई कारण नहीं.".format(num_warns, limit))
     else:
-        update.effective_message.reply_text("This user hasn't got any warnings!")
+        update.effective_message.reply_text("इस यूजर को कोई चेतावनी नहीं मिली है!")
 
 
 # Dispatcher handler stop - do not async
@@ -224,7 +224,7 @@ def add_warn_filter(bot: Bot, update: Update):
 
     sql.add_warn_filter(chat.id, keyword, content)
 
-    update.effective_message.reply_text("Warn handler added for '{}'!".format(keyword))
+    update.effective_message.reply_text(" वार्न हैंडलर for '{}'!".format(keyword))
     raise DispatcherHandlerStop
 
 
@@ -248,13 +248,13 @@ def remove_warn_filter(bot: Bot, update: Update):
     chat_filters = sql.get_chat_warn_triggers(chat.id)
 
     if not chat_filters:
-        msg.reply_text("No warning filters are active here!")
+        msg.reply_text("कोई चेतावनी फ़िल्टर यहां सक्रिय नहीं हैं !")
         return
 
     for filt in chat_filters:
         if filt == to_remove:
             sql.remove_warn_filter(chat.id, to_remove)
-            msg.reply_text("Yep, I'll stop warning people for that.")
+            msg.reply_text(" हां, मैं लोगों को इसके लिए चेतावनी देना बंद कर दूंगा")
             raise DispatcherHandlerStop
 
     msg.reply_text("That's not a current warning filter - run /warnlist for all active warning filters.")
@@ -393,18 +393,18 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /warns <userhandle>: get a user's number, and reason, of warnings.
- - /warnlist: list of all current warning filters
+ - /warns <userhandle>: चेतावनियों का यूजर नंबर और कारण प्राप्त करें.
+ - /warnlist: सभी मौजूदा चेतावनी फिल्टर की सूची
 
 *Admin only:*
- - /warn <userhandle>: warn a user. After 3 warns, the user will be banned from the group. Can also be used as a reply.
- - /resetwarn <userhandle>: reset the warnings for a user. Can also be used as a reply.
- - /addwarn <keyword> <reply message>: set a warning filter on a certain keyword. If you want your keyword to \
-be a sentence, encompass it with quotes, as such: `/addwarn "very angry" This is an angry user`. 
- - /nowarn <keyword>: stop a warning filter
- - /warnlimit <num>: set the warning limit
- - /strongwarn <on/yes/off/no>: If set to on, exceeding the warn limit will result in a ban. Else, will just kick.
-"""
+ - /warn <userhandle>: एक यूजर को चेतावनी। 3 चेतावनियों के बाद, यूजर को ग्रुप से प्रतिबंधित कर दिया जाएगा। उत्तर के रूप में भी इस्तेमाल किया जा सकता है reply.
+ - /resetwarn <userhandle>:यूजर के लिए चेतावनी रीसेट करें। उत्तर के रूप में भी इस्तेमाल किया जा सकता है।.
+ - /addwarn <keyword> <reply message>: एक निश्चित कीवर्ड पर एक चेतावनी फ़िल्टर सेट करें। यदि आप अपना कीवर्ड चाहते हैं \
+एक वाक्य हो, इसे उद्धरण के साथ शामिल करें, जैसे: `/addwarn" बहुत गुस्से में "यह एक नाराज उपयोगकर्ता है।`. 
+ - /nowarn <keyword>: एक चेतावनी फ़िल्टर बंद करें
+ - /warnlimit <num>: चेतावनी सीमा निर्धारित करें
+ - /strongwarn <on/yes/off/no>:यदि सेट किया गया है, तो चेतावनी सीमा से अधिक होने पर प्रतिबंध लगेगा। और, बस निकाल देंगे
+ """
 
 __mod_name__ = "Warnings"
 
