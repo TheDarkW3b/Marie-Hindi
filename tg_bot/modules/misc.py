@@ -410,20 +410,20 @@ def getsticker(bot: Bot, update: Update):
     else:
         bot.sendChatAction(chat_id, "typing")
         update.effective_message.reply_text("Hello " + "[{}](tg://user?id={})".format(msg.from_user.first_name,
-                                            msg.from_user.id) + ", Please reply to sticker message to get sticker image",
+                                            msg.from_user.id) + "स्टिकर प्राप्त करने के लिए कृपया स्टिकर संदेश का उत्तर दें",
                                             parse_mode=ParseMode.MARKDOWN)
 
 # /ip is for private use
 __help__ = """
- - /id: get the current group id. If used by replying to a message, gets that user's id.
- - /runs: reply a random string from an array of replies.
- - /slap: slap a user, or get slapped if not a reply.
- - /time <place>: gives the local time at the given place.
- - /info: get information about a user.
- - /gdpr: deletes your information from the bot's database. Private chats only.
- - /markdownhelp: quick summary of how markdown works in telegram - can only be called in private chats.
- - /stickerid: reply to a sticker and get sticker id of that.
- - /getsticker: reply to a sticker and get that sticker as .png and image. 
+ - /id: वर्तमान ग्रुप आईडी प्राप्त करें। अगर किसी मैसेज का रिप्लाई करके इस्तेमाल किया जाता है, तो उस यूजर की आई.डी..
+ - /runs: उत्तर की एक सरणी से एक यादृच्छिक स्ट्रिंग का जवाब देंr
+ - /slap: यूजर को थप्पड़ मारना, या जवाब नहीं तो थप्पड़ मारना
+ - /time <place>: दी गई जगह पर स्थानीय समय देता है
+ - /info: एक यूजर के बारे में जानकारी प्राप्त करें
+ - /gdpr: बॉट के डेटाबेस से आपकी जानकारी को हटा देता है। केवल निजी चैट
+ - /markdownhelp: टेलीग्राम में मार्कडाउन कैसे काम करता है
+ - /stickerid: एक स्टीकर का जवाब और उस की स्टीकर आईडी प्राप्त करें।
+ - /getsticker: स्टिकर का उत्तर दें और उस स्टिकर को .png और छवि के रूप में प्राप्त करें
 """
 
 __mod_name__ = "Misc"
