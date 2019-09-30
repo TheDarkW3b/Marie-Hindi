@@ -144,14 +144,14 @@ if is_module_loaded(FILENAME):
 
     __help__ = """
 *Admin only:*
-- /logchannel: get log channel info
-- /setlog: set the log channel.
-- /unsetlog: unset the log channel.
+- /logchannel: लॉग चैनल जानकारी प्राप्त करें
+- /setlog: लॉग चैनल सेट करें.
+- /unsetlog: लॉग चैनल को अनसेट करें
 
-Setting the log channel is done by:
-- adding the bot to the desired channel (as an admin!)
-- sending /setlog in the channel
-- forwarding the /setlog to the group
+लॉग चैनल की स्थापना निम्न द्वारा की जाती है: 
+- बॉट को चैनल में जोड़ना (एक एडमिन के रूप में!) 
+- चैनल में भेजना / सेट करना 
+- समूह को अग्रेषित करना / सेट करना
 """
 
     __mod_name__ = "Log Channels"
