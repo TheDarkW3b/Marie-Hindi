@@ -255,17 +255,16 @@ def table(bot: Bot, update: Update):
                 update.message.reply_text("Go do some work instead of flippin tables you helpless fagit.")
 		
 __help__ = """
- - /shrug : get shrug XD.
- - /table : get flip/unflip :v.
- - /decide : Randomly answers yes/no/maybe
- - /toss : Tosses A coin
- - /abuse : Abuses the cunt
- - /tts <any text> : Converts text to speech
- - /bluetext : check urself :V
- - /roll : Roll a dice.
- - /rlg : Join ears,nose,mouth and create an emo ;-;
- - /zal <any text> : zalgofy! your text
- Lyrics Plugin will take some moar time to come up.
+ - /shrug : सिकुड़ जाना xD.
+ - /table : पलटना / खोलना :v.
+ - /decide : बेतरतीब ढंग से जवाब हां / नहीं / शायद
+ - /toss : टॉस
+ - /abuse : गाली देता है
+ - /tts <any text> : आवाज को voice मे परिवर्तित करता है
+ - /bluetext : खुद की जाँच करें :V
+ - /roll : एक पासा को रोल करें.
+ - /rlg : कान, नाक, मुंह से जुड़ें और एक ईमो बनाएं :-;
+ - /zal <any text> : zalgofy!लेख.
 """
 
 __mod_name__ = "Extras"
