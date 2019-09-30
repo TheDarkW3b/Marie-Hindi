@@ -106,7 +106,7 @@ def get(bot, update, notename, show_none=True, no_format=False):
                     LOGGER.warning("Message was: %s", str(note.value))
         return
     elif show_none:
-        message.reply_text("This note doesn't exist")
+        message.reply_text("यह नोट मौजूद नहीं है")
 
 
 @run_async
@@ -136,7 +136,7 @@ def save(bot: Bot, update: Update):
     note_name, text, data_type, content, buttons = get_note_type(msg)
 
     if data_type is None:
-        msg.reply_text("Dude, there's no note")
+        msg.reply_text("यार, कोई नोट नहीं है")
         return
     
     if len(text.strip()) == 0:
@@ -230,18 +230,16 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /get <notename>: get the note with this notename
+ - /get <notename>: इस नोटनेम के साथ नोट प्राप्त करें
  - #<notename>: same as /get
- - /notes or /saved: list all saved notes in this chat
+ - /notes or /saved: इस चैट में सभी सहेजे गए नोटों को सूचीबद्ध करें
 
 If you would like to retrieve the contents of a note without any formatting, use `/get <notename> noformat`. This can \
 be useful when updating a current note.
 
 *Admin only:*
- - /save <notename> <notedata>: saves notedata as a note with name notename
-A button can be added to a note by using standard markdown link syntax - the link should just be prepended with a \
-`buttonurl:` section, as such: `[somelink](buttonurl:example.com)`. Check /markdownhelp for more info.
- - /save <notename>: save the replied message as a note with name notename
+ - /save <notename> <notedata>: नोटा नाम से नोट के रूप में विराटता को बचाता है एक बटन को मानक मार्कडाउन लिंक सिंटैक्स का उपयोग करके एक नोट में जोड़ा जा सकता है - लिंक को बस एक \ के साथ पूर्वनिर्मित होना चाहिए `बटनूरल:` खंड, इस प्रकार: `[somelink](buttonurl:example.com)`. Check /markdownhelp for more info.
+ - /save <notename>: नाम के नाम के साथ एक नोट के रूप में उत्तरित संदेश को सहेजें
  - /clear <notename>: clear note with this name
 """
 
