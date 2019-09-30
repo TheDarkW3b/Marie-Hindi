@@ -138,7 +138,7 @@ def start(bot: Bot, update: Update, args: List[str]):
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN)
     else:
-        update.effective_message.reply_text("अरे!अभी भी मैं जिंदा हूँ :-)")
+        update.effective_message.reply_text("अरे!अभी मैं जिंदा हूँ :-)")
 
 
 # for test purposes
