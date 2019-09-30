@@ -247,15 +247,15 @@ def info(bot: Bot, update: Update, args: List[str]):
     text += "\nPermanent user link: {}".format(mention_html(user.id, "link"))
 
     if user.id == OWNER_ID:
-        text += "\n\nThis person is my owner - I would never do anything against them!"
+        text += "\n\nयह व्यक्ति मेरा मालिक है - मैं उनके खिलाफ कभी कुछ नहीं करूँगा!"
     else:
         if user.id in SUDO_USERS:
-            text += "\nThis person is one of my sudo users! " \
-                    "Nearly as powerful as my owner - so watch it."
+            text += "\nयह व्यक्ति मेरे sudo यूजर में से एक है! " \
+                    "मेरे मालिक के तराह शक्तिशाली है"
         else:
             if user.id in SUPPORT_USERS:
-                text += "\nThis person is one of my support users! " \
-                        "Not quite a sudo user, but can still gban you off the map."
+                text += "\nयह व्यक्ति मेरे Support यूजर में से एक है! " \
+                        "एक sudo यूजर नही है, लेकिन फिर भी यह आपको gban कर सकता है,"
 
             if user.id in WHITELIST_USERS:
                 text += "\nThis person has been whitelisted! " \
