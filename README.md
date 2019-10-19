@@ -22,7 +22,7 @@ Marie and I are moderating a [support group](https://t.me/CuratorCrew), where yo
 bot, discover/request new features, report bugs, and stay in the loop whenever a new update is available. Of course
 I'll also help when a database schema changes, and some table column needs to be modified/added. Note to maintainers that all schema changes will be found in the commit messages, and its their responsibility to read any new commits.
 
-Join the [Tech channel](https://t.me/Dark_Hacker_X) For Free Knowledge. This Code Is Made By [@TheDarkW3b](https://t.me/TheDarkW3b)
+Join the [Tech channel](https://t.me/Dark_Hacker_X) For Free Knowledge. This Code Is Made By [@TheDarkW3b](https://github.com/TheDarkW3b)
 
 Alternatively, [find me on telegram](https://t.me/TheDarkW3b)! (Keep all support questions in the support chat, where more people can help you.)
 
