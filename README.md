@@ -1,5 +1,7 @@
 # Marie-Hindi
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 
 एक मॉड्यूलर टेलीग्राम पायथन बॉट python3 पर sqlalchemy डेटाबेस के साथ चल रहा है।
 
